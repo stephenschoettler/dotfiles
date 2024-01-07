@@ -8,7 +8,7 @@ This repository includes configurations for:
 - `.bashrc`: Custom bash shell settings to optimize command line usage.
 - `.vimrc`: Enhancements and custom settings for Vim editor.
 - `.gitconfig`: Global Git configurations to streamline version control operations.
-- `/.config/hyprland/`: Personalized settings for the Hyprland window manager to improve workflow and aesthetics.
+- `/.config/hypr/`: Personalized settings for the Hyprland window manager to improve workflow and aesthetics.
 - ...and various other configurations and scripts that make up my daily computing environment.
 
 ## Getting Started
