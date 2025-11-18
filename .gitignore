@@ -1,0 +1,8 @@
+# Ignore cache files
+.ruff_cache/
+
+# Ignore local backup/pacman files
+*.pacnew
+*.pacsave
+*.save
+*~
