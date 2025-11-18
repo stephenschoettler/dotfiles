@@ -1,0 +1,310 @@
+#!/bin/bash
+# .aliases file
+
+################################################################################
+# EXA ALIASES
+################################################################################
+# Mnemonic System:
+#   l  -> Long format (-l)
+#   a  -> All files, including hidden (-a)
+#   t  -› Tree view (-T)
+#   h  -› Human-readable file sizes (-h)
+#   g  -› Git status (--git)
+#   s  -› Sort by... (followed by another letter)
+#   o  -› Octal permissions (--octal-permissions)
+#
+# Examples:
+#   'la'  -> List All files
+#   'll'  -> Long List
+#   'lla' -> Long List All files
+#   'lt'  -> List in a Tree view
+#   'lts' -> List Tree, sorted by Size
+################################################################################
+
+########################################
+# Base ls Replacement
+########################################
+# Your default `ls` command. The foundation for other aliases.
+alias ls='exa --icons --group-directories-first --color=auto'
+
+########################################
+# Core Listing Aliases
+########################################
+# Show all files (including hidden) in a simple list.
+alias la='ls -a'
+
+# The classic "long list" format.
+alias l='ls -lh'
+alias ll='ls -lah'
+
+# Long list, but with human-readable file sizes (e.g., 4.2K, 1.3M).
+alias lh='ls -lh'
+
+# The most common detailed view: Long list, All files, Human-readable.
+alias lla='ls -lah'
+alias llh='ls -lah' # Common alternative for the same command
+
+# List only directories, long format, human-readable.
+alias lld='ls -lhD'
+
+# lsz — list files by size, human-readable, minimal info
+# Usage: lsz -b [path] (largest→smallest) | lsz -s [path] (smallest→largest)
+lsz() {
+  case "$1" in
+  # Standardized 'eza' to 'exa' for consistency
+  -l)
+    shift
+    exa --only-files -lh --no-permissions --no-user --no-time --sort=size --reverse "${@:-.}"
+    ;;
+  -s)
+    shift
+    exa --only-files -lh --no-permissions --no-user --no-time --sort=size "${@:-.}"
+    ;;
+  *) echo "Usage: lsz -l [path] (largest→smallest) | lsz -s [path] (smallest→largest)" ;;
+  esac
+}
+
+########################################
+# Tree Views
+########################################
+# Standard tree view.
+alias lt='ls -T'
+
+# Tree view including hidden files.
+alias lta='ls -Ta'
+
+# Tree view with specified depth.
+alias lt1='ls -T --level=1'
+alias lt2='ls -T --level=2'
+alias lt3='ls -T --level=3'
+
+########################################
+# Sorting Aliases (builds on `ll`)
+########################################
+# Long list, sorted by newest modified date first.
+alias lsn='ll --sort=newest'
+
+# Long list, sorted by oldest modified date first.
+alias lso='ll --sort=oldest'
+
+# Long list, sorted by file size (largest first).
+alias lss='ll --sort=size'
+
+# Long list, sorted by file extension.
+alias lse='ll --sort=extension'
+
+########################################
+# Special Integrations (builds on `ll`)
+########################################
+# Long list with Git status.
+alias lg='ll --git'
+
+# Long list with Git status for all files.
+alias lga='lla --git'
+
+# Long list with file permissions shown in octal format.
+alias lo='ll --octal-permissions'
+
+# Long list, octal permissions, and human-readable sizes.
+alias loh='lh --octal-permissions'
+
+########################################
+# Bash
+########################################
+alias reload='source ~/.zshrc'
+
+########################################
+# Navigation
+########################################
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+cp..() { cp -i "$@" ..; }
+cp...() { cp -i "$@" ../..; }
+cp....() { cp -i "$@" ../../..; }
+
+mv..() { mv -i "$@" ..; }
+mv...() { mv -i "$@" ../..; }
+mv....() { mv -i "$@" ../../..; }
+
+########################################
+# Terminal
+########################################
+#alias c='clear && colorscript --exec crunchbang-mini'
+alias c='clear'
+
+########################################
+# History
+########################################
+alias h='history | tail -10'
+alias hc='history -c'
+alias r='!!'
+alias hr='!'
+alias hgrep='history | grep'
+
+########################################
+# Brightness
+########################################
+# Set brightness to 100%
+alias max_brightness='xrandr --output DP-2 --brightness 1.0 && echo "Brightness set to 100%"'
+
+# Set brightness to a specific value (between 0.1 and 1.0)
+set_brightness() {
+  if (($(echo "$1 >= 0.1 && $1 <= 1.0" | bc -l))); then
+    xrandr --output DP-2 --brightness "$1"
+    echo "Brightness set to: $1"
+  else
+    echo "Error: Brightness value must be between 0.1 and 1.0"
+  fi
+}
+
+brightness_up() {
+  local current_brightness
+  current_brightness=$(xrandr --verbose | grep -i brightness | awk '{print $2}')
+  current_brightness=$(echo "$current_brightness + 0.1" | bc)
+  if (($(echo "$current_brightness > 1.0" | bc -l))); then
+    current_brightness=1.0
+  fi
+  xrandr --output DP-2 --brightness "$current_brightness"
+  echo "Brightness increased to: $current_brightness"
+}
+
+brightness_down() {
+  local current_brightness
+  current_brightness=$(xrandr --verbose | grep -i brightness | awk '{print $2}')
+  current_brightness=$(echo "$current_brightness - 0.1" | bc)
+  if (($(echo "$current_brightness < 0.1" | bc -l))); then
+    current_brightness=0.1
+  fi
+  xrandr --output DP-2 --brightness "$current_brightness"
+  echo "Brightness decreased to: $current_brightness"
+}
+
+########################################
+# Misc
+########################################
+alias fetch='fastfetch'
+alias top='btop'
+alias ping='ping -c 5'
+# Alias for showing disk space in human-readable format.
+alias df='df -h'
+# alias dim='xrandr --output DP-2 --brightness 0.7'
+# alias bright='xrandr --output DP-2 --brightness 1.0'
+alias ffmpeg="/usr/bin/ffmpeg"
+alias tmux-reload='tmux source-file ~/.tmux.conf && tmux display-message "Config reloaded ✔"'
+
+########################################
+# OpenCode
+########################################
+alias ask='opencode run --model openrouter/google/gemini-2.0-flash-exp:free'
+
+########################################
+# Aliases for pikaur
+########################################
+# 1. Update and Upgrade System
+alias pi='pikaur -Syu'
+
+# 2. Search for a Package
+alias pis='pikaur -Ss'
+
+# 3. Install a Package
+alias pii='pikaur -S'
+
+# 4. Remove a Package
+alias pir='pikaur -R'
+
+# 5. Remove a Package and Unused Dependencies
+alias pirn='pikaur -Rns'
+
+# 6. Upgrade Only AUR Packages
+alias piu='pikaur -Sua'
+
+# 7. Clean Cache
+alias pic='pikaur -Sc'
+
+# 8. Show Orphans
+alias pio='pikaur -Qdt'
+
+# 9. Remove All Orphans
+alias pior='pikaur -Rns $(pikaur -Qdtq)'
+
+# 10. View Installed Packages
+alias piq='pikaur -Q'
+
+# 11. View AUR Packages Installed
+alias pia='pikaur -Qm'
+
+# 12. Get Info on a Specific Package
+alias pinfo='pikaur -Qi'
+
+# 13. List Files Installed by a Package
+alias pil='pikaur -Ql'
+
+# 14. Clean Unused Dependencies
+alias pid='pikaur -R $(pikaur -Qdtq)'
+
+# 15. Download Package without Installing
+alias pidown='pikaur -Sw'
+
+# 16. Edit a PKGBUILD Before Installing
+alias pie='pikaur --edit'
+
+# 17. Check for Outdated Packages
+alias piout='pikaur -Qum'
+
+# 18. Show Package Dependencies
+alias pdep='pikaur -Si'
+
+########################################
+# Plex Sync
+########################################
+rsmovies() {
+  rsync -avh --progress "$@" w0lf@192.168.68.66:/mnt/media/Movies/
+  # Check for rsync failure
+  if [ $? -ne 0 ]; then
+    echo "🚨 Rsync failed for Movies. Check connectivity, permissions, and IP (192.168.68.66)." >&2
+  fi
+}
+
+rstv() {
+  rsync -avh --progress "$@" w0lf@192.168.68.66:/mnt/media/TV/
+  # Check for rsync failure
+  if [ $? -ne 0 ]; then
+    echo "🚨 Rsync failed for TV. Check connectivity, permissions, and IP (192.168.68.66)." >&2
+  fi
+}
+
+rsmusic() {
+  rsync -avh --progress "$@" w0lf@192.168.68.66:/mnt/media/Music/
+  # Check for rsync failure
+  if [ $? -ne 0 ]; then
+    echo "🚨 Rsync failed for Music. Check connectivity, permissions, and IP (192.168.68.66)." >&2
+  fi
+}
+
+########################################
+# Apple Superdrive
+########################################
+
+spititout() {
+  drive=$(lsblk -ndo NAME,TYPE | awk '$2 == "rom" {print "/dev/"$1; exit}')
+  if [ -n "$drive" ]; then
+    echo "⏏️Ejecting $drive… 💿"
+    eject "$drive"
+  else
+    echo "No optical drive found." >&2
+  fi
+}
+
+########################################
+# Safety
+########################################
+alias mv='mv -i' # prompt before overwrite
+alias cp='cp -i' # prompt before overwrite
+alias rm='rm -i' # prompt before delete
+
+########################################
+# Clear File
+########################################
+alias clf='truncate -s 0'
