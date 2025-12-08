@@ -8,20 +8,23 @@ NUM_COLORS=${#COLORS[@]}
 
 # Read or initialize index
 if [ -f "$INDEX_FILE" ]; then
-    LAST_INDEX=$(cat "$INDEX_FILE")
+  LAST_INDEX=$(cat "$INDEX_FILE")
 else
-    LAST_INDEX=-1
+  LAST_INDEX=-1
 fi
 
 # Increment and wrap
-CURRENT_INDEX=$(( (LAST_INDEX + 1) % NUM_COLORS ))
+CURRENT_INDEX=$(((LAST_INDEX + 1) % NUM_COLORS))
 COLOR=${COLORS[$CURRENT_INDEX]}
 
 # Save index
-echo "$CURRENT_INDEX" > "$INDEX_FILE"
+echo "$CURRENT_INDEX" >"$INDEX_FILE"
 
-# Set color for the CURRENT window. 
-# MATCHES .tmux.conf STYLE: No extra separators, just simple powerline arrows.
-tmux setw window-status-current-format "#[bg=$COLOR,fg=#282a36] #I  #W #[bg=#282a36,fg=$COLOR]"
+# WIREFRAME HUD STYLE:
+# No solid background.
+# The 'brackets' are colored ($COLOR). The text inside is white (#f8f8f2) and bold.
+# Format: [ 1 > zsh ]
+tmux setw window-status-current-format "#[fg=$COLOR,bg=default] [ #[fg=#f8f8f2,bold]#I  #W #[fg=$COLOR,nobold]]"
 
 exit 0
+

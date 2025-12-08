@@ -73,6 +73,9 @@ alias lt='ls -T'
 # Tree view including hidden files.
 alias lta='ls -Ta'
 
+# Tree view with all files using tree command.
+alias llt='tree -a'
+
 # Tree view with specified depth.
 alias lt1='ls -T --level=1'
 alias lt2='ls -T --level=2'
