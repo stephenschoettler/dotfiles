@@ -2,7 +2,7 @@
 # .aliases file
 
 ################################################################################
-# EXA ALIASES
+# EZA ALIASES
 ################################################################################
 # Mnemonic System:
 #   l  -> Long format (-l)
@@ -25,7 +25,7 @@
 # Base ls Replacement
 ########################################
 # Your default `ls` command. The foundation for other aliases.
-alias ls='exa --icons --group-directories-first --color=auto'
+alias ls='eza --icons --group-directories-first --color=auto'
 
 ########################################
 # Core Listing Aliases
@@ -54,11 +54,11 @@ lsz() {
   # Standardized 'eza' to 'exa' for consistency
   -l)
     shift
-    exa --only-files -lh --no-permissions --no-user --no-time --sort=size --reverse "${@:-.}"
+    eza --only-files -lh --no-permissions --no-user --no-time --sort=size --reverse "${@:-.}"
     ;;
   -s)
     shift
-    exa --only-files -lh --no-permissions --no-user --no-time --sort=size "${@:-.}"
+    eza --only-files -lh --no-permissions --no-user --no-time --sort=size "${@:-.}"
     ;;
   *) echo "Usage: lsz -l [path] (largest→smallest) | lsz -s [path] (smallest→largest)" ;;
   esac
@@ -147,42 +147,97 @@ alias hr='!'
 alias hgrep='history | grep'
 
 ########################################
-# Brightness
+# Brightness (Fixed & Robust)
 ########################################
-# Set brightness to 100%
-alias max_brightness='xrandr --output DP-2 --brightness 1.0 && echo "Brightness set to 100%"'
 
-# Set brightness to a specific value (between 0.1 and 1.0)
-set_brightness() {
-  if (($(echo "$1 >= 0.1 && $1 <= 1.0" | bc -l))); then
-    xrandr --output DP-2 --brightness "$1"
-    echo "Brightness set to: $1"
-  else
-    echo "Error: Brightness value must be between 0.1 and 1.0"
+# --- 1. Detection Logic ---
+
+_get_internal() {
+  # 1. Try standard laptop names (eDP/LVDS)
+  local screen=$(xrandr --query | grep " connected" | grep -E "^eDP|^LVDS" | head -n 1 | cut -d ' ' -f1)
+
+  # 2. Fallback: If not found, try the "primary" monitor
+  if [ -z "$screen" ]; then
+    screen=$(xrandr --query | grep " connected" | grep "primary" | head -n 1 | cut -d ' ' -f1)
   fi
+
+  # 3. Desperation: Take the first thing that isn't HDMI
+  if [ -z "$screen" ]; then
+    screen=$(xrandr --query | grep " connected" | grep -v "HDMI" | head -n 1 | cut -d ' ' -f1)
+  fi
+
+  echo "$screen"
 }
 
-brightness_up() {
-  local current_brightness
-  current_brightness=$(xrandr --verbose | grep -i brightness | awk '{print $2}')
-  current_brightness=$(echo "$current_brightness + 0.1" | bc)
-  if (($(echo "$current_brightness > 1.0" | bc -l))); then
-    current_brightness=1.0
-  fi
-  xrandr --output DP-2 --brightness "$current_brightness"
-  echo "Brightness increased to: $current_brightness"
+_get_external() {
+  # Grab the HDMI screen (since we know that works) or anything that isn't the internal one
+  local internal=$(_get_internal)
+  xrandr --query | grep " connected" | grep -v "^$internal" | head -n 1 | cut -d ' ' -f1
 }
 
-brightness_down() {
-  local current_brightness
-  current_brightness=$(xrandr --verbose | grep -i brightness | awk '{print $2}')
-  current_brightness=$(echo "$current_brightness - 0.1" | bc)
-  if (($(echo "$current_brightness < 0.1" | bc -l))); then
-    current_brightness=0.1
+# --- 2. The Core Math Function ---
+_adjust_brightness() {
+  local display="$1"
+  local step="$2"
+
+  # 1. Safety Check: Ensure we have a display and a step
+  if [ -z "$display" ] || [ -z "$step" ]; then
+    echo "❌ Usage: _adjust_brightness [display] [step] (e.g., +0.1)"
+    return 1
   fi
-  xrandr --output DP-2 --brightness "$current_brightness"
-  echo "Brightness decreased to: $current_brightness"
+
+  # 2. Get Brightness: Uses awk to find the device block and extract brightness strictly from that block
+  local current=$(xrandr --verbose | awk -v disp="$display" '$0 ~ "^"disp {f=1; next} /^[^\t ]/ {f=0} f && /Brightness/ {print $2; exit}')
+
+  # Fallback
+  if [ -z "$current" ]; then current=1.0; fi
+
+  # 3. Math Time: Removed the extra "+" sign.
+  # Since $step includes the sign (+0.1 or -0.1), we just concatenate them.
+  # Example: "0.7 +0.1" or "0.7 -0.1"
+  local new_val=$(echo "$current $step" | bc)
+
+  # 4. Caps (0.1 - 1.0)
+  if (($(echo "$new_val > 1.0" | bc -l))); then new_val=1.0; fi
+  if (($(echo "$new_val < 0.1" | bc -l))); then new_val=0.1; fi
+
+  # 5. Apply
+  xrandr --output "$display" --brightness "$new_val"
+  echo "💡 ${display} brightness: $new_val"
 }
+
+# Set Brightness Absolute (Usage: sb 0.5)
+sb() {
+  local val="$1"
+  # Default to internal display
+  local display=$(_get_internal)
+
+  # Safety: Ensure a value was provided
+  if [ -z "$val" ]; then
+    echo "❌ Usage: sb 0.5 (Sets brightness to 50%)"
+    return 1
+  fi
+
+  # Apply
+  xrandr --output "$display" --brightness "$val"
+  echo "💡 Brightness set to $val on $display"
+}
+# --- 3. Aliases ---
+
+# Laptop (Internal)
+alias bup='_adjust_brightness $(_get_internal) +0.1'
+alias bdown='_adjust_brightness $(_get_internal) -0.1'
+
+# Monitor (External)
+alias mbup='_adjust_brightness $(_get_external) +0.1'
+alias mbdown='_adjust_brightness $(_get_external) -0.1'
+
+# Sync (Both)
+alias ballup='bup; mbup'
+alias balldown='bdown; mbdown'
+
+# Reset
+alias max_brightness='xrandr --output $(_get_internal) --brightness 1.0; xrandr --output $(_get_external) --brightness 1.0'
 
 ########################################
 # Misc

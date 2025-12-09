@@ -29,51 +29,51 @@
   Search command history.
 
 ### Core Directory Views
-* `ls`: `exa --icons`  
+* `ls`: `eza --icons`  
   File listing with icons.
-* `l`: `exa -a --icons`  
+* `l`: `eza -a --icons`  
   Show hidden files with icons.
-* `ll`: `exa -la --icons`  
+* `ll`: `eza -la --icons`  
   Long list format with icons.
-* `l1`: `exa -1 --icons`  
+* `l1`: `eza -1 --icons`  
   One entry per line with icons.
-* `lh`: `exa -lh --icons`  
+* `lh`: `eza -lh --icons`  
   Human-readable sizes with icons.
-* `lhd`: `exa -lhD --icons`  
+* `lhd`: `eza -lhD --icons`  
   Show directories only with human-readable sizes.
 
 ### Tree Views
-* `lt`: `exa -T --icons`  
+* `lt`: `eza -T --icons`  
   Show directory tree.
-* `lt1`: `exa -T --level=1 --icons`  
+* `lt1`: `eza -T --level=1 --icons`  
   Tree view up to depth 1.
-* `lt2`: `exa -T --level=2 --icons`  
+* `lt2`: `eza -T --level=2 --icons`  
   Tree view up to depth 2.
-* `lt3`: `exa -T --level=3 --icons`  
+* `lt3`: `eza -T --level=3 --icons`  
   Tree view up to depth 3.
 * `llt`: `tree -a`  
   Show directory tree with all files.
 
 ### Sorting Variants
-* `lsn`: `exa -l --sort=newest --icons`  
+* `lsn`: `eza -l --sort=newest --icons`  
   Sort by newest files.
-* `lso`: `exa -l --sort=oldest --icons`  
+* `lso`: `eza -l --sort=oldest --icons`  
   Sort by oldest files.
-* `lss`: `exa -l --sort=size --icons`  
+* `lss`: `eza -l --sort=size --icons`  
   Sort by file size.
-* `lse`: `exa -l --sort=extension --icons`  
+* `lse`: `eza -l --sort=extension --icons`  
   Sort by file extension.
 
 ### Git Integration
-* `lg`: `exa -l --git --icons`  
+* `lg`: `eza -l --git --icons`  
   Long list with git status.
-* `lga`: `exa -la --git --icons`  
+* `lga`: `eza -la --git --icons`  
   Show all files with git status.
 
 ### Permission Details
-* `lo`: `exa -l --octal-permissions --icons`  
+* `lo`: `eza -l --octal-permissions --icons`  
   Show octal permissions.
-* `loh`: `exa -lh --octal-permissions --icons`  
+* `loh`: `eza -lh --octal-permissions --icons`  
   Octal permissions with human-readable sizes.
 
 ### Brightness
