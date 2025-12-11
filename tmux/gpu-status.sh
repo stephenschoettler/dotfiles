@@ -25,7 +25,7 @@ if command -v nvidia-smi &>/dev/null; then
     # Display: GPU 12% 45°C with a pipe separator on the right
     # Matches the formatting in .tmux.conf
     UTILBAR=$(bar $UTIL)
-    printf ' #[fg=#ff79c6]󰍹 [%s] %3s%% #[fg=#6272a4]│' "${UTILBAR}" "$UTIL"
+    printf ' #[fg=#ff79c6]󰍹 [%s] %3s%%' "${UTILBAR}" "$UTIL"
   fi
 else
   echo ""
