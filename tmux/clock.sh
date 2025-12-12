@@ -3,9 +3,10 @@
 # --- Configuration ---
 PADDING_X=6                   # Extra breathing room inside the box
 COLOR_THEME='\033[38;2;80;250;123m' # Green #50FA7B
+BG_COLOR='\033[48;2;40;42;54m' # Dracula bg #282A36
 
 # --- Setup ---
-trap 'tput cnorm; clear; exit 0' INT TERM EXIT
+trap 'tput cnorm; printf "\\033[49m"; clear; exit 0' INT TERM EXIT
 HIDE_CURSOR='\033[?25l'
 COLOR_RESET=$(tput sgr0)
 COLOR_BOLD=$(tput bold)
@@ -167,7 +168,12 @@ draw_box() {
 
 # --- Main Loop ---
 tput civis
-clear
+printf "${BG_COLOR}\033[2J"
+
+last_time=""
+last_date=""
+last_cols=0
+last_lines=0
 
 while true; do
   # Get time in HH:MM format (removed seconds/AMPM to keep it clean, add back if desired)
@@ -175,14 +181,31 @@ while true; do
   current_time=$(date '+%I:%M')
   current_date=$(date '+%A %B %d, %Y')
   current_ampm=$(date '+%p')
+  
+  # Check terminal size
+  current_cols=$(tput cols)
+  current_lines=$(tput lines)
 
-  draw_box "$current_time" "$current_date" "$current_ampm"
+  # Only redraw if something changed
+  if [[ "$current_time" != "$last_time" ]] || \
+     [[ "$current_date" != "$last_date" ]] || \
+     [[ "$current_cols" != "$last_cols" ]] || \
+     [[ "$current_lines" != "$last_lines" ]]; then
 
-  # Park Cursor
-  tput cup $(tput lines) $(tput cols)
-  printf "${HIDE_CURSOR}"
+    printf "${BG_COLOR}\033[2J"
+    draw_box "$current_time" "$current_date" "$current_ampm"
+    
+    # Park Cursor
+    tput cup "$current_lines" "$current_cols"
+    printf "${HIDE_CURSOR}"
 
-  read -rsn1 -t 1 input
+    last_time="$current_time"
+    last_date="$current_date"
+    last_cols="$current_cols"
+    last_lines="$current_lines"
+  fi
+
+  read -rsn1 -t 0.25 input
   if [ -n "$input" ]; then
     break
   fi
