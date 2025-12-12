@@ -1,0 +1,24 @@
+Background	
+#282A36
+Current Line	
+#6272A4
+Selection	
+#44475A
+Foreground	
+#F8F8F2
+Comment	
+#6272A4
+Red	
+#FF5555
+Orange	
+#FFB86C
+Yellow	
+#F1FA8C
+Green	
+#50FA7B
+Cyan	
+#8BE9FD
+Purple	
+#BD93F9
+Pink	
+#FF79C6

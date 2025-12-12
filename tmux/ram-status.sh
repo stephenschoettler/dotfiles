@@ -2,7 +2,7 @@
 bar() {
   local pct=$1
   local width=5
-  local full=$((pct * width / 100))
+  local full=$(((pct * width + 50) / 100))
   local bar=""
   for ((i=0; i<full; i++)); do bar+="█"; done
   for ((i=full; i<width; i++)); do bar+="░"; done
