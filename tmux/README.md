@@ -45,11 +45,14 @@
 - `Alt+a H/J/K/L`: Resize the current pane by 5 cells (hold Shift for uppercase)
 - `Alt+Left` / `Alt+Right` / `Alt+Up` / `Alt+Down`: Move focus between panes (smart with Vim)
 
+### Popups
+
+- `Alt+a t`: Show 12hr clock + date popup
 
 ### Status Bar (Dracula Theme)
 
 - Updates every second with a bottom-aligned bar
-- Left side shows session name and host with Dracula colors
+- Left side shows session name with Dracula colors
 - Right side shows prefix status plus CPU, RAM, and GPU info (`gpu-status.sh`)
 - Window tabs styled with Dracula colors for active/inactive states
 
