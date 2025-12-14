@@ -289,6 +289,8 @@ alias pior='pikaur -Rns $(pikaur -Qdtq)'
 
 # 10. View Installed Packages
 alias piq='pikaur -Q'
+alias piqs='pikaur -Qs'
+alias piqi='pikaur -Qi'
 
 # 11. View AUR Packages Installed
 alias pia='pikaur -Qm'

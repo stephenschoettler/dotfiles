@@ -5,10 +5,11 @@ Welcome to my personal collection of configuration files, also known as "dotfile
 
 ## Contents
 This repository includes configurations for:
-- `.bashrc`: Custom bash shell settings to optimize command line usage.
-- `.vimrc`: Enhancements and custom settings for Vim editor.
-- `.gitconfig`: Global Git configurations to streamline version control operations.
-- `/.config/hypr/`: Personalized settings for the Hyprland window manager to improve workflow and aesthetics.
+- `shell/`: Custom Zsh shell settings (`.zshrc`) and aliases.
+- `nvim/`: Enhancements and custom settings for Neovim.
+- `kitty/`: Configuration for the Kitty terminal emulator.
+- `tmux/`: Terminal multiplexer settings and status scripts.
+- `hypr/`: Personalized settings for the Hyprland window manager to improve workflow and aesthetics.
 - ...and various other configurations and scripts that make up my daily computing environment.
 
 ## Getting Started
