@@ -225,8 +225,8 @@ sb() {
 # --- 3. Aliases ---
 
 # Laptop (Internal)
-alias bup='_adjust_brightness $(_get_internal) +0.1'
-alias bdown='_adjust_brightness $(_get_internal) -0.1'
+alias bup='brightnessctl s +10%'
+alias bdown='brightnessctl s 10%-'
 
 # Monitor (External)
 alias mbup='_adjust_brightness $(_get_external) +0.1'
