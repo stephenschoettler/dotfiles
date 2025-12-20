@@ -117,6 +117,13 @@ alias loh='lh --octal-permissions'
 alias reload='source ~/.zshrc'
 
 ########################################
+# Editors
+########################################
+alias vim='nvim'
+alias vi='nvim'
+alias v='nvim'
+
+########################################
 # Navigation
 ########################################
 alias ..='cd ..'
@@ -319,28 +326,23 @@ alias pdep='pikaur -Si'
 ########################################
 # Plex Sync
 ########################################
+# Variables for easy maintenance
+PLEX_HOST="w0lf@192.168.68.66"
+PLEX_BASE="/srv/media"
+
 rsmovies() {
-  rsync -avh --progress "$@" w0lf@192.168.68.66:/mnt/media/Movies/
-  # Check for rsync failure
-  if [ $? -ne 0 ]; then
-    echo "🚨 Rsync failed for Movies. Check connectivity, permissions, and IP (192.168.68.66)." >&2
-  fi
+  rsync -avh --progress "$@" "$PLEX_HOST:$PLEX_BASE/movies/"
+  [ $? -ne 0 ] && echo "🚨 Rsync failed for Movies." >&2
 }
 
 rstv() {
-  rsync -avh --progress "$@" w0lf@192.168.68.66:/mnt/media/TV/
-  # Check for rsync failure
-  if [ $? -ne 0 ]; then
-    echo "🚨 Rsync failed for TV. Check connectivity, permissions, and IP (192.168.68.66)." >&2
-  fi
+  rsync -avh --progress "$@" "$PLEX_HOST:$PLEX_BASE/tv/"
+  [ $? -ne 0 ] && echo "🚨 Rsync failed for TV." >&2
 }
 
 rsmusic() {
-  rsync -avh --progress "$@" w0lf@192.168.68.66:/mnt/media/Music/
-  # Check for rsync failure
-  if [ $? -ne 0 ]; then
-    echo "🚨 Rsync failed for Music. Check connectivity, permissions, and IP (192.168.68.66)." >&2
-  fi
+  rsync -avh --progress "$@" "$PLEX_HOST:$PLEX_BASE/music/"
+  [ $? -ne 0 ] && echo "🚨 Rsync failed for Music." >&2
 }
 
 ########################################

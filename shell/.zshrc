@@ -61,8 +61,6 @@ tmux() {
     command tmux "$@"
   fi
 }
-alias t='tmux'
-alias ta='tmux attach'
 
 # LMStudio Function
 unalias lmstudio 2>/dev/null
