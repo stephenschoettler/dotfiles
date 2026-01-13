@@ -1,0 +1,174 @@
+@import "colors.css";
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12px;
+}
+
+window#waybar {
+    background: transparent;
+    color: @foreground;
+}
+
+tooltip {
+    background: @background;
+    border: 1px solid @selection;
+    padding: 10px;
+}
+
+tooltip label {
+    color: @foreground;
+}
+
+#workspaces {
+  background-color: transparent;
+}
+
+#workspaces button {
+  border-radius: 10px;
+  background-color: rgba(40, 42, 54, 0.80);
+    color: #F8F8F2;
+    padding: 0 2px 0 2px;
+    margin: 2px 2px 0 2px;
+    min-width: 30px;
+}
+
+#workspaces button.active {
+  color: #1e1e2e;
+  background: linear-gradient(to right, rgba(255, 121, 198, 0.80), rgba(189, 147, 249, 0.80));
+  padding: 0 2px 0 2px;
+}
+
+#workspaces button:hover {
+  color: #1e1e2e;
+  background: linear-gradient(to right, rgba(255, 121, 198, 0.80), rgba(189, 147, 249, 0.80));
+  padding: 0 2px 0 2px;
+}
+
+#workspaces button.urgent {
+  background-color: #f38ba8;
+}
+
+#clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #custom-media, #tray, #custom-power, #custom-notification, #idle_inhibitor, #window {
+    padding: 10px 10px;
+    margin: 2px 2px 0 2px;
+    border-radius: 10px;
+    background-color: rgba(40, 42, 54, 0.80);
+    min-width: 10px;
+
+}
+
+#clock {
+      color: #F8F8F2;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+}
+
+#battery {
+      color: #F8F8F2;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+}
+
+#battery.charging {
+    color: @yellow;
+    border: none;
+}
+
+#battery.warning:not(.charging) {
+    color: @red;
+    border: none;
+}
+
+#battery.full {
+}
+
+#cpu {
+    color: @pink;
+    border-top: 2px solid @pink;
+}
+
+#memory {
+    color: @cyan;
+    border-top: 2px solid @cyan;
+}
+
+#temperature {
+    color: @orange;
+    border-top: 2px solid @orange;
+}
+
+#backlight {
+      color: #F8F8F2;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+    padding-top: 10px;
+}
+
+#network {
+      color: #F8F8F2;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+    padding-top: 2px;
+}
+
+#network.disconnected {
+    color: @red;
+    border: none;
+}
+
+#pulseaudio {
+      color: #F8F8F2;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+    padding: 0 13px 0 10px; /* Asymmetrical padding to nudge content left */
+}
+
+#pulseaudio.muted {
+    color: @comment;
+    border: none;
+}
+
+#tray {
+    color: @cyan;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+    padding-top: 10px;
+}
+#custom-power {
+      color: #F8F8F2;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+    padding-top: 2px;
+}
+
+#custom-notification {
+      color: #F8F8F2;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+    padding: 0 12px 0 17px;
+}
+
+#idle_inhibitor {
+      color: #F8F8F2;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+    padding: 0 15px 0 10px;
+}
+#window {
+    color: #F8F8F2;
+    border: none;
+    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+}
+
+/* Hide hyprland/window title when workspace is empty */
+window#waybar.empty #window {
+    opacity: 0;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+

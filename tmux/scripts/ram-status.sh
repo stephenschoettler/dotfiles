@@ -9,4 +9,4 @@ bar() {
   echo "$bar"
 }
 RAM=$(free --mega | awk '/^Mem:/ {printf "%.0f", $3/$2 *100}')
-printf ' #[fg=#ffb86c] [%s] %3s%%' "$(bar $RAM)" "$RAM"
+printf ' #[fg=#FFB86C] [%s] %3s%%' "$(bar $RAM)" "$RAM"

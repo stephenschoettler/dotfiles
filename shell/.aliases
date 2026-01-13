@@ -20,6 +20,8 @@
 #   'lt'  -> List in a Tree view
 #   'lts' -> List Tree, sorted by Size
 ################################################################################
+# sudo fix
+alias sudo='sudo '
 
 ########################################
 # Base ls Replacement
@@ -123,6 +125,9 @@ alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
 
+alias emacs='emacsclient -c -a "emacs"'
+alias em='emacs -nw'
+
 ########################################
 # Navigation
 ########################################
@@ -154,110 +159,18 @@ alias hr='!'
 alias hgrep='history | grep'
 
 ########################################
-# Brightness (Fixed & Robust)
-########################################
-
-# --- 1. Detection Logic ---
-
-_get_internal() {
-  # 1. Try standard laptop names (eDP/LVDS)
-  local screen=$(xrandr --query | grep " connected" | grep -E "^eDP|^LVDS" | head -n 1 | cut -d ' ' -f1)
-
-  # 2. Fallback: If not found, try the "primary" monitor
-  if [ -z "$screen" ]; then
-    screen=$(xrandr --query | grep " connected" | grep "primary" | head -n 1 | cut -d ' ' -f1)
-  fi
-
-  # 3. Desperation: Take the first thing that isn't HDMI
-  if [ -z "$screen" ]; then
-    screen=$(xrandr --query | grep " connected" | grep -v "HDMI" | head -n 1 | cut -d ' ' -f1)
-  fi
-
-  echo "$screen"
-}
-
-_get_external() {
-  # Grab the HDMI screen (since we know that works) or anything that isn't the internal one
-  local internal=$(_get_internal)
-  xrandr --query | grep " connected" | grep -v "^$internal" | head -n 1 | cut -d ' ' -f1
-}
-
-# --- 2. The Core Math Function ---
-_adjust_brightness() {
-  local display="$1"
-  local step="$2"
-
-  # 1. Safety Check: Ensure we have a display and a step
-  if [ -z "$display" ] || [ -z "$step" ]; then
-    echo "❌ Usage: _adjust_brightness [display] [step] (e.g., +0.1)"
-    return 1
-  fi
-
-  # 2. Get Brightness: Uses awk to find the device block and extract brightness strictly from that block
-  local current=$(xrandr --verbose | awk -v disp="$display" '$0 ~ "^"disp {f=1; next} /^[^\t ]/ {f=0} f && /Brightness/ {print $2; exit}')
-
-  # Fallback
-  if [ -z "$current" ]; then current=1.0; fi
-
-  # 3. Math Time: Removed the extra "+" sign.
-  # Since $step includes the sign (+0.1 or -0.1), we just concatenate them.
-  # Example: "0.7 +0.1" or "0.7 -0.1"
-  local new_val=$(echo "$current $step" | bc)
-
-  # 4. Caps (0.1 - 1.0)
-  if (($(echo "$new_val > 1.0" | bc -l))); then new_val=1.0; fi
-  if (($(echo "$new_val < 0.1" | bc -l))); then new_val=0.1; fi
-
-  # 5. Apply
-  xrandr --output "$display" --brightness "$new_val"
-  echo "💡 ${display} brightness: $new_val"
-}
-
-# Set Brightness Absolute (Usage: sb 0.5)
-sb() {
-  local val="$1"
-  # Default to internal display
-  local display=$(_get_internal)
-
-  # Safety: Ensure a value was provided
-  if [ -z "$val" ]; then
-    echo "❌ Usage: sb 0.5 (Sets brightness to 50%)"
-    return 1
-  fi
-
-  # Apply
-  xrandr --output "$display" --brightness "$val"
-  echo "💡 Brightness set to $val on $display"
-}
-# --- 3. Aliases ---
-
-# Laptop (Internal)
-alias bup='brightnessctl s +10%'
-alias bdown='brightnessctl s 10%-'
-
-# Monitor (External)
-alias mbup='_adjust_brightness $(_get_external) +0.1'
-alias mbdown='_adjust_brightness $(_get_external) -0.1'
-
-# Sync (Both)
-alias ballup='bup; mbup'
-alias balldown='bdown; mbdown'
-
-# Reset
-alias max_brightness='xrandr --output $(_get_internal) --brightness 1.0; xrandr --output $(_get_external) --brightness 1.0'
-
-########################################
 # Misc
 ########################################
 alias fetch='fastfetch'
 alias top='btop'
 alias ping='ping -c 5'
-# Alias for showing disk space in human-readable format.
+alias usage='ncdu --color dark'
 alias df='df -h'
-# alias dim='xrandr --output DP-2 --brightness 0.7'
-# alias bright='xrandr --output DP-2 --brightness 1.0'
-alias ffmpeg="/usr/bin/ffmpeg"
+alias du='du -sh'
+alias dud='\du -h -d 1'
+alias bigs='\du -ah . | sort -rh | head -20'
 alias tmux-reload='tmux source-file ~/.tmux.conf && tmux display-message "Config reloaded ✔"'
+alias ffmpeg="/usr/bin/ffmpeg"
 
 ########################################
 # OpenCode
@@ -328,20 +241,20 @@ alias pdep='pikaur -Si'
 ########################################
 # Variables for easy maintenance
 PLEX_HOST="w0lf@192.168.68.66"
-PLEX_BASE="/srv/media"
+PLEX_BASE="/mnt/media"
 
 rsmovies() {
-  rsync -avh --progress "$@" "$PLEX_HOST:$PLEX_BASE/movies/"
+  rsync -avh --progress "$@" "$PLEX_HOST:$PLEX_BASE/Movies/"
   [ $? -ne 0 ] && echo "🚨 Rsync failed for Movies." >&2
 }
 
 rstv() {
-  rsync -avh --progress "$@" "$PLEX_HOST:$PLEX_BASE/tv/"
+  rsync -avh --progress "$@" "$PLEX_HOST:$PLEX_BASE/TV/"
   [ $? -ne 0 ] && echo "🚨 Rsync failed for TV." >&2
 }
 
 rsmusic() {
-  rsync -avh --progress "$@" "$PLEX_HOST:$PLEX_BASE/music/"
+  rsync -avh --progress "$@" "$PLEX_HOST:$PLEX_BASE/Music/"
   [ $? -ne 0 ] && echo "🚨 Rsync failed for Music." >&2
 }
 

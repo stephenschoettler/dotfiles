@@ -104,6 +104,15 @@ source <(fzf --zsh)
 [[ -f ~/.config/command-capture/command-capture.zsh ]] && source ~/.config/command-capture/command-capture.zsh
 
 # --------------------------
+# 8. COMPLETION TWEAKS
+# --------------------------
+# Enable case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# Ensure completions are fully initialized
+autoload -Uz compinit && compinit
+
+# --------------------------
 # 5. CYBERPUNK WIREFRAME VISUALS (FINAL v3)
 # --------------------------
 
@@ -219,3 +228,14 @@ ${P_GREEN}└─>>${P_RESET} '
 
 # Safely add this to the precmd list
 add-zsh-hook precmd restore-full-prompt
+
+# --------------------------
+# 7. FORCE PLUGINS (Load Last to fix conflicts)
+# --------------------------
+# Fixes autosuggestions conflict with Cyberpunk prompt widgets
+source $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/w0lf/.lmstudio/bin"
+# End of LM Studio CLI section
+
