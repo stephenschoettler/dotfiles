@@ -10,6 +10,9 @@ This repository includes configurations for:
 - `kitty/`: Configuration for the Kitty terminal emulator.
 - `tmux/`: Terminal multiplexer settings and status scripts.
 - `hypr/`: Personalized settings for the Hyprland window manager to improve workflow and aesthetics.
+- `waybar/`: Highly customized Waybar configuration with Dracula theme and multi-monitor support.
+- `cava/`: Configuration for CAVA (Console Based Audio Visualizer for ALSA).
+- `wallpaper/`: Collection of wallpapers, including Dracula themed assets.
 - ...and various other configurations and scripts that make up my daily computing environment.
 
 ## Getting Started
