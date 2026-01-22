@@ -5,13 +5,14 @@ Welcome to my personal collection of configuration files, also known as "dotfile
 
 ## Contents
 This repository includes configurations for:
-- `shell/`: Custom Zsh shell settings (`.zshrc`) and aliases.
-- `nvim/`: Enhancements and custom settings for Neovim.
-- `kitty/`: Configuration for the Kitty terminal emulator.
-- `tmux/`: Terminal multiplexer settings and status scripts.
-- `hypr/`: Personalized settings for the Hyprland window manager to improve workflow and aesthetics.
-- `waybar/`: Highly customized Waybar configuration with Dracula theme and multi-monitor support.
-- `cava/`: Configuration for CAVA (Console Based Audio Visualizer for ALSA).
+- `hypr/`: **Hyprland** window manager settings featuring the Dwindle layout, animations, and custom workspace rules.
+- `tmux/`: **Tmux** configuration designed with a "Dracula Cyberpunk HUD" aesthetic. Keybindings are mapped to mimic Hyprland (e.g., `Alt+h/j/k/l` for focus) for seamless navigation.
+- `waybar/`: **Waybar** setup with a custom Dracula theme, dynamic modules, and multi-monitor support.
+- `shell/`: Custom **Zsh** shell settings (`.zshrc`) and aliases.
+- `nvim/`: Enhancements and custom settings for **Neovim**.
+- `kitty/`: Configuration for the **Kitty** terminal emulator.
+- `cava/`: Configuration for **CAVA** (Console Based Audio Visualizer for ALSA).
+- `pikaur.conf`: Configuration for the **Pikaur** AUR helper.
 - `wallpaper/`: Collection of wallpapers, including Dracula themed assets.
 - ...and various other configurations and scripts that make up my daily computing environment.
 

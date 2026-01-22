@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- Configuration ---
-LAPTOP_MONITOR="eDP-1"
+LAPTOP_MONITOR="eDP-2"
 EXTERNAL_MONITOR="HDMI-A-1"
 # ---------------------
 

@@ -126,14 +126,23 @@ alias vi='nvim'
 alias v='nvim'
 
 alias emacs='emacsclient -c -a "emacs"'
-alias em='emacs -nw'
+alias em='emacsclient -t -a ""'
 
 ########################################
 # Navigation
 ########################################
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
+# Unalias first to allow functions to take precedence
+unalias .. ... .... 2>/dev/null
+
+..() {
+  if [ -z "$1" ]; then cd ..; else cd "../$1"; fi
+}
+...() {
+  if [ -z "$1" ]; then cd ../..; else cd "../../$1"; fi
+}
+....() {
+  if [ -z "$1" ]; then cd ../../..; else cd "../../../$1"; fi
+}
 
 cp..() { cp -i "$@" ..; }
 cp...() { cp -i "$@" ../..; }
@@ -170,12 +179,11 @@ alias du='du -sh'
 alias dud='\du -h -d 1'
 alias bigs='\du -ah . | sort -rh | head -20'
 alias tmux-reload='tmux source-file ~/.tmux.conf && tmux display-message "Config reloaded ✔"'
-alias ffmpeg="/usr/bin/ffmpeg"
 
 ########################################
-# OpenCode
+# OpenCode (depreciated)
 ########################################
-alias ask='opencode run --model openrouter/google/gemini-2.0-flash-exp:free'
+alias ask='opencode run --model openrouter/x-ai/grok-4.1-fast'
 
 ########################################
 # Aliases for pikaur
@@ -210,7 +218,6 @@ alias pior='pikaur -Rns $(pikaur -Qdtq)'
 # 10. View Installed Packages
 alias piq='pikaur -Q'
 alias piqs='pikaur -Qs'
-alias piqi='pikaur -Qi'
 
 # 11. View AUR Packages Installed
 alias pia='pikaur -Qm'
@@ -275,11 +282,23 @@ spititout() {
 ########################################
 # Safety
 ########################################
-alias mv='mv -i' # prompt before overwrite
-alias cp='cp -i' # prompt before overwrite
-alias rm='rm -i' # prompt before delete
+alias mv='mv -i'     # prompt before overwrite
+alias cp='cp -i'     # prompt before overwrite
+alias rm='rm -i'     # prompt before delete
+alias rmd='rm -r -I' # prompt once before recursive delete
 
 ########################################
 # Clear File
 ########################################
 alias clf='truncate -s 0'
+
+########################################
+# Config Shortcuts
+########################################
+alias hyprcon='vim ~/.config/hypr/hyprland.conf'
+alias wbcon='vim ~/.config/waybar/config'
+alias zshcon='vim ~/.zshrc'
+alias alcon='vim ~/.aliases'
+alias kitcon='vim ~/.config/kitty/kitty.conf'
+alias tmcon='vim ~/.config/tmux/tmux.conf'
+alias nvcon='vim ~/.config/nvim'

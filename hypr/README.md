@@ -6,15 +6,18 @@
 | Keybind | Action | Command |
 | :--- | :--- | :--- |
 | `SUPER + SPACE` | Open Terminal | `kitty` |
-| SUPER + W | Open Browser | `brave` |
-| SUPER + E | Open Emacs | `emacs` |
-| SUPER + C | Calculator | `qalculate-gtk` |
+| `SUPER + W` | Open Browser | `brave` |
+| `SUPER + E` | Open Emacs | `emacsclient -c -a "emacs"` |
+| `SUPER + C` | Calculator | `qalculate-gtk` |
 | `SUPER + Z` | Open File Manager | `thunar` |
 | `SUPER + RETURN` | App Launcher | `wofi --show drun` |
-| `SUPER + Escape` | Lock Screen | `hyprlock` |
+| `SUPER + Delete` | Lock Screen | `loginctl lock-session` |
+| `SUPER + Home` | Power Menu | `power-menu.sh` |
+| `SUPER + N` | Notification Center | `swaync` |
+| `SUPER + V` | Clipboard Manager | `cliphist_selector.sh` |
 | `SUPER + Q` | Close Active Window | `killactive` |
-| `SUPER + X` | Toggle Pseudo Tiling | `pseudo` |
-| `SUPER + \|` | Toggle Split | `togglesplit` |
+| `SUPER + P` | Toggle Pseudo Tiling | `pseudo` |
+| `SUPER + Tab` | Toggle Split | `togglesplit` |
 | `SUPER + -` | Toggle Waybar | `pkill -SIGUSR1 waybar` |
 
 ## 🪟 Window Management
@@ -22,7 +25,7 @@
 | :--- | :--- | :--- |
 | `SUPER + h / j / k / l` | Move Focus | Focus window (vim style) |
 | `SUPER + SHIFT + F` | Toggle Fullscreen | |
-| `SUPER + SHIFT + W` | Toggle Floating | |
+| `SUPER + F` | Toggle Floating | Center & Resize (90%) |
 | `SUPER + SHIFT + h / j / k / l` | Resize Window | Resize by 10px |
 | `SUPER + ALT + h / j / k / l` | Move Window (Floating) | Move by 10px |
 | `SUPER + CTRL + h / j / k / l` | Move Window (Layout) | Move window in direction |
@@ -35,15 +38,14 @@
 | `SUPER + 0-9` | Switch to Workspace 1-10 |
 | `SUPER + SHIFT + 0-9` | Move Active Window to Workspace 1-10 |
 | `SUPER + Scroll` | Cycle Through Workspaces |
-| `SUPER + S` | Swap Workspaces Between Monitors |
 | `SUPER + CTRL + 0-9` | Swap Specific Workspace Pair (Monitor Handling) |
 
 ## 📸 Screenshots (Hyprshot)
 | Keybind | Action | Output Destination |
 | :--- | :--- | :--- |
-| `Print` | Region Screenshot | `~/Pictures/Screenshots` |
+| `Print` | Monitor Screenshot | `~/pictures/screenshots` |
+| `SUPER + Print` | Region Screenshot | `~/pictures/screenshots` |
 | `SUPER + CTRL + Print` | Region Screenshot | Clipboard |
-| `SUPER + Print` | Full Screen Screenshot | `~/Pictures/Screenshots` |
 
 ## 🔊 Hardware & Media
 | Keybind | Action |
@@ -53,3 +55,4 @@
 | `Mute (Key)` | Toggle Mute |
 | `Brightness Up (Key)` | Brightness +10% |
 | `Brightness Down (Key)` | Brightness -10% |
+| `Media Keys` | Play/Pause/Next/Prev |

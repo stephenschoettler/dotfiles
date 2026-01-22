@@ -88,9 +88,9 @@ conda() {
       eval "$__conda_setup"
   else
       if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-          . "/opt/miniconda3/etc/profile.d/conda.sh"
+# . "/opt/miniconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
       else
-          export PATH="/opt/miniconda3/bin:$PATH"
+# export PATH="/opt/miniconda3/bin:$PATH"  # commented out by conda initialize
       fi
   fi
   unset __conda_setup
@@ -151,9 +151,14 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 function venv_info() {
     if [[ -n "$VIRTUAL_ENV" ]]; then
+        # Standard Python venv
         echo "─[ %F{#8be9fd}venv:$(basename $VIRTUAL_ENV)%F{#50fa7b} ]"
+    elif [[ -n "$CONDA_DEFAULT_ENV" ]]; then
+        # Conda environment
+        echo "─[ %F{#8be9fd}conda:$CONDA_DEFAULT_ENV%F{#50fa7b} ]"
     fi
 }
+
 
 # --- GIT CONFIG ---
 autoload -Uz vcs_info
@@ -238,4 +243,25 @@ source $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.z
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/home/w0lf/.lmstudio/bin"
 # End of LM Studio CLI section
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/w0lf/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/w0lf/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/w0lf/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/w0lf/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+eval "$(zoxide init zsh)"
+
+# bun completions
+[ -s "/home/w0lf/.bun/_bun" ] && source "/home/w0lf/.bun/_bun"
 
