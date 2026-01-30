@@ -1,0 +1,55 @@
+filenames:
+  downloads:
+    icon:
+      glyph: ""
+  documents:
+    icon:
+      glyph: ""
+  pictures:
+    icon:
+      glyph: ""
+  music:
+    icon:
+      glyph: ""
+  videos:
+    icon:
+      glyph: ""
+  desktop:
+    icon:
+      glyph: ""
+  public:
+    icon:
+      glyph: ""
+  templates:
+    icon:
+      glyph: ""
+  code:
+    icon:
+      glyph: ""
+  isos:
+    icon:
+      glyph: ""
+  games:
+    icon:
+      glyph: ""
+  ollama:
+    icon:
+      glyph: "󰚩"
+  important:
+    icon:
+      glyph: ""
+  emacs:
+    icon:
+      glyph: ""
+  .emacs.d:
+    icon:
+      glyph: ""
+  org:
+    icon:
+      glyph: ""
+  dev:
+    icon:
+      glyph: ""
+  miniconda3:
+    icon:
+      glyph: ""
