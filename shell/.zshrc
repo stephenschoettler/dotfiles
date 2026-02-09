@@ -40,8 +40,8 @@ source $ZSH/oh-my-zsh.sh
 # 3. BASIC CONFIG
 # --------------------------
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 HIST_STAMPS="mm/dd/yyyy"
 
 ENABLE_CORRECTION="true"
@@ -80,17 +80,17 @@ lmstudio() {
     echo "✅ Launched LM Studio version $version"
   fi
 }
-# Lazy-load Conda
+# Lazy-load Conda (deferred init — only runs when you first call `conda`)
 conda() {
   unset -f conda
-  __conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+  __conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
   if [ $? -eq 0 ]; then
       eval "$__conda_setup"
   else
-      if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-# . "/opt/miniconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
+      if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+          . "$HOME/miniconda3/etc/profile.d/conda.sh"
       else
-# export PATH="/opt/miniconda3/bin:$PATH"  # commented out by conda initialize
+          export PATH="$HOME/miniconda3/bin:$PATH"
       fi
   fi
   unset __conda_setup
@@ -104,7 +104,7 @@ source <(fzf --zsh)
 [[ -f ~/.config/command-capture/command-capture.zsh ]] && source ~/.config/command-capture/command-capture.zsh
 
 # --------------------------
-# 8. COMPLETION TWEAKS
+# 5. COMPLETION TWEAKS
 # --------------------------
 # Enable case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -113,7 +113,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 autoload -Uz compinit && compinit
 
 # --------------------------
-# 5. CYBERPUNK WIREFRAME VISUALS (FINAL v3)
+# 6. CYBERPUNK WIREFRAME VISUALS (FINAL v3)
 # --------------------------
 
 # --- GRAVITY: Force prompt to bottom ---
@@ -181,7 +181,7 @@ PROMPT='${P_GREEN}┌─[ ${P_WHITE}%n@%m ${P_GREEN}]─[ ${P_ORANGE}%~ ${P_GREE
 ${P_GREEN}└─>>${P_RESET} '
 
 # --------------------------
-# 6. SAFE TMUX AUTOSTART (Last)
+# 7. SAFE TMUX AUTOSTART (Last)
 # --------------------------
 # Autostart tmux only for interactive, non-root, real TTY, not inside tmux, not VS Code
 case $- in *i*) _interactive=1;; esac
@@ -201,7 +201,7 @@ fi
 unset _interactive
 
 # --------------------------
-# 6. TRANSIENT PROMPT (Clean History)
+# 8. TRANSIENT PROMPT (Clean History)
 # --------------------------
 # 1. Define the "transient" (mini) prompt
 # Simplified: Just the arrow, no corner.
@@ -235,7 +235,7 @@ ${P_GREEN}└─>>${P_RESET} '
 add-zsh-hook precmd restore-full-prompt
 
 # --------------------------
-# 7. FORCE PLUGINS (Load Last to fix conflicts)
+# 9. FORCE PLUGINS (Load Last to fix conflicts)
 # --------------------------
 # Fixes autosuggestions conflict with Cyberpunk prompt widgets
 source $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -244,24 +244,12 @@ source $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.z
 export PATH="$PATH:/home/w0lf/.lmstudio/bin"
 # End of LM Studio CLI section
 
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/w0lf/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/w0lf/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/w0lf/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/w0lf/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 eval "$(zoxide init zsh)"
 
 # bun completions
 [ -s "/home/w0lf/.bun/_bun" ] && source "/home/w0lf/.bun/_bun"
 
+
+. "$HOME/.local/bin/env"
+
+alias claude-mem='bun "/home/w0lf/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'

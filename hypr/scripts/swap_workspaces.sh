@@ -5,7 +5,11 @@
 # If Workspace 1 is on Laptop -> Normal -> Swap to External.
 # If Workspace 1 is on External -> Swapped -> Swap to Laptop.
 
-LAPTOP_MONITOR="eDP-1"
+for cmd in hyprctl jq notify-send; do
+    command -v "$cmd" >/dev/null || { echo "Missing: $cmd" >&2; exit 1; }
+done
+
+LAPTOP_MONITOR="eDP-2"
 EXTERNAL_MONITOR="HDMI-A-1"
 
 # Get location of Workspace 1

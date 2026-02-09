@@ -53,7 +53,7 @@ alias lld='ls -lhD'
 # Usage: lsz -b [path] (largest→smallest) | lsz -s [path] (smallest→largest)
 lsz() {
   case "$1" in
-  # Standardized 'eza' to 'exa' for consistency
+  # Standardized 'exa' to 'eza' (maintained fork)
   -l)
     shift
     eza --only-files -lh --no-permissions --no-user --no-time --sort=size --reverse "${@:-.}"
@@ -163,8 +163,6 @@ alias c='clear'
 ########################################
 alias h='history | tail -10'
 alias hc='history -c'
-alias r='!!'
-alias hr='!'
 alias hgrep='history | grep'
 
 ########################################
@@ -302,3 +300,10 @@ alias alcon='vim ~/.aliases'
 alias kitcon='vim ~/.config/kitty/kitty.conf'
 alias tmcon='vim ~/.config/tmux/tmux.conf'
 alias nvcon='vim ~/.config/nvim'
+
+########################################
+# Claude Accounts
+########################################
+alias claude-personal="CLAUDE_CONFIG_DIR=~/.claude-personal claude"
+alias claude-work="CLAUDE_CONFIG_DIR=~/.claude-work claude"
+

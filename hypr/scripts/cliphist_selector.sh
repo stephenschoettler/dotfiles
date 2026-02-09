@@ -1,2 +1,5 @@
 #!/bin/bash
-cliphist list | awk '{ $1=""; line = substr($0, 2); if (length(line) > 30) { print substr(line, 1, 30) "..." } else { print line } }' | wofi --dmenu | cliphist decode | wl-copy
+for cmd in cliphist wofi wl-copy; do
+    command -v "$cmd" >/dev/null || { echo "Missing: $cmd" >&2; exit 1; }
+done
+cliphist list | wofi --dmenu | cliphist decode | wl-copy

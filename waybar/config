@@ -86,7 +86,7 @@
         },
         "backlight": {
             "justify": "center",
-            "device": "intel_backlight",
+            "device": "nvidia_wmi_ec_backlight",
             "format": "{percent}% {icon}",
             "format-icons": ["", "", "", "", "", "", "", "", ""],
             "tooltip-format": "Brightness",
@@ -224,7 +224,7 @@
         },
         "backlight": {
             "justify": "center",
-            "device": "intel_backlight",
+            "device": "nvidia_wmi_ec_backlight",
             "format": "{percent}% {icon}",
             "format-icons": ["", "", "", "", "", "", "", "", ""],
             "tooltip-format": "Brightness",

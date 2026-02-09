@@ -1,8 +1,30 @@
 # Ignore cache files
 .ruff_cache/
+__pycache__/
 
 # Ignore local backup/pacman files
 *.pacnew
 *.pacsave
 *.save
 *~
+
+# Editor swap/temp files
+*.swp
+*.swo
+*.tmp
+.netrwhist
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*
+credentials.json
+
+# Claude Code project settings
+hypr/.claude/
+
+# Upstream reference docs
+hypr/wiki/
