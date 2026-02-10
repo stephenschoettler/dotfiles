@@ -1,32 +1,47 @@
-# My Linux Environment Dotfiles
+# Dotfiles
 
-## Introduction
-Welcome to my personal collection of configuration files, also known as "dotfiles." These files are used to customize and setup my Linux environment exactly the way I like it. From shell configurations to window manager settings, these dotfiles are central to creating a productive and personalized workspace.
+Personal configuration files for two Arch Linux machines, managed with a unified install script.
 
-## Contents
-This repository includes configurations for:
-- `hypr/`: **Hyprland** window manager settings featuring the Dwindle layout, animations, and custom workspace rules.
-- `tmux/`: **Tmux** configuration designed with a "Dracula Cyberpunk HUD" aesthetic. Keybindings are mapped to mimic Hyprland (e.g., `Alt+h/j/k/l` for focus) for seamless navigation.
-- `waybar/`: **Waybar** setup with a custom Dracula theme, dynamic modules, and multi-monitor support.
-- `shell/`: Custom **Zsh** shell settings (`.zshrc`) and aliases.
-- `nvim/`: Enhancements and custom settings for **Neovim**.
-- `kitty/`: Configuration for the **Kitty** terminal emulator.
-- `cava/`: Configuration for **CAVA** (Console Based Audio Visualizer for ALSA).
-- `pikaur.conf`: Configuration for the **Pikaur** AUR helper.
-- `wallpaper/`: Collection of wallpapers, including Dracula themed assets.
-- ...and various other configurations and scripts that make up my daily computing environment.
+## Machines
 
-## Getting Started
-To use these dotfiles:
-1. Clone this repository to your local machine.
-2. Backup your current dotfiles!
-3. Symlink or copy the files from this repository to the appropriate locations in your home directory or respective configuration directories.
-4. Restart or log out and back in for the changes to take effect.
+| Host | Role | Hardware |
+|------|------|----------|
+| **slim5** | Desktop (Hyprland) | Ryzen 7 7840HS · RTX 4060 · 32GB RAM |
+| **w0lf-mini** | Headless server | Intel N100 · 16GB RAM |
 
-Please adapt and modify these files as you see fit to suit your own preferences.
+## What's Included
 
-## Contributing
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. If you have a suggestion that would make this better, please fork the repo and create a pull request or simply open an issue with the tag "enhancement." Don't forget to give the project a star! Thanks again!
+| Directory | Description | slim5 | w0lf-mini |
+|-----------|-------------|:-----:|:---------:|
+| `shell/` | Zsh config & aliases | ✔ | ✔ |
+| `eza/` | eza (ls replacement) config | ✔ | ✔ |
+| `tmux/` | Tmux — full desktop config + minimal server variant | ✔ | ✔\* |
+| `hypr/` | Hyprland window manager | ✔ | — |
+| `kitty/` | Kitty terminal | ✔ | — |
+| `waybar/` | Waybar status bar (Dracula theme) | ✔ | — |
+| `cava/` | CAVA audio visualizer | ✔ | — |
+| `pikaur/` | Pikaur AUR helper | ✔ | — |
+| `nvim/` | Neovim config | manual | manual |
+| `wallpaper/` | Wallpapers (Dracula themed) | ✔ | — |
+
+\* w0lf-mini uses `tmux/tmux-server.conf` — same keybindings, no GPU/desktop status scripts.
+
+## Install
+
+```bash
+git clone https://github.com/stephenschoettler/dotfiles.git
+cd dotfiles
+./install.sh
+```
+
+The script detects the hostname (`slim5` or `w0lf-mini`) and symlinks the appropriate configs. Existing files are backed up to `*.bak`.
+
+## Design Notes
+
+- **Tmux keybindings** mirror Hyprland (`Alt+h/j/k/l` for navigation) for muscle-memory consistency.
+- **Dracula** color scheme throughout (Hyprland, Waybar, Kitty, Tmux).
+- Server config is intentionally minimal — shell, eza, and tmux only.
 
 ## License
-This project is licensed under the GNU General Public License (GPL) - see the [LICENSE](LICENSE) file for details.
+
+[GPL](LICENSE)
