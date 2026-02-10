@@ -34,14 +34,14 @@ link "$DOTFILES/shell/.zshrc"   "$HOME/.zshrc"
 link "$DOTFILES/shell/.aliases" "$HOME/.aliases"
 
 # Common configs (all machines)
-for dir in eza; do
+for dir in eza pikaur; do
     link "$DOTFILES/$dir" "$HOME/.config/$dir"
 done
 
 # Desktop-only configs (slim5)
 if [[ "$HOSTNAME" == "slim5" ]]; then
     info "Desktop mode: linking Hyprland, Waybar, Kitty, Cava..."
-    for dir in hypr kitty waybar cava pikaur; do
+    for dir in hypr kitty waybar cava; do
         link "$DOTFILES/$dir" "$HOME/.config/$dir"
     done
     link "$DOTFILES/tmux" "$HOME/.config/tmux"

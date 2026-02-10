@@ -20,7 +20,7 @@ Personal configuration files for two Arch Linux machines, managed with a unified
 | `kitty/` | Kitty terminal | ✔ | — |
 | `waybar/` | Waybar status bar (Dracula theme) | ✔ | — |
 | `cava/` | CAVA audio visualizer | ✔ | — |
-| `pikaur/` | Pikaur AUR helper | ✔ | — |
+| `pikaur/` | Pikaur AUR helper | ✔ | ✔ |
 | `nvim/` | Neovim config | manual | manual |
 | `wallpaper/` | Wallpapers (Dracula themed) | ✔ | — |
 
@@ -40,7 +40,7 @@ The script detects the hostname (`slim5` or `w0lf-mini`) and symlinks the approp
 
 - **Tmux keybindings** mirror Hyprland (`Alt+h/j/k/l` for navigation) for muscle-memory consistency.
 - **Dracula** color scheme throughout (Hyprland, Waybar, Kitty, Tmux).
-- Server config is intentionally minimal — shell, eza, and tmux only.
+- Server config is intentionally minimal — shell, eza, pikaur, and tmux only.
 
 ## License
 
