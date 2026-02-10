@@ -25,16 +25,34 @@ link() {
 }
 
 echo "Installing dotfiles from $DOTFILES"
+HOSTNAME=$(hostname)
+echo "Detected hostname: $HOSTNAME"
 echo ""
 
-# Shell
+# Shell (all machines)
 link "$DOTFILES/shell/.zshrc"   "$HOME/.zshrc"
 link "$DOTFILES/shell/.aliases" "$HOME/.aliases"
 
-# XDG configs (~/.config/*)
-for dir in hypr kitty tmux waybar nvim cava eza pikaur; do
+# Common configs (all machines)
+for dir in eza; do
     link "$DOTFILES/$dir" "$HOME/.config/$dir"
 done
+
+# Desktop-only configs (slim5)
+if [[ "$HOSTNAME" == "slim5" ]]; then
+    info "Desktop mode: linking Hyprland, Waybar, Kitty, Cava..."
+    for dir in hypr kitty waybar cava pikaur; do
+        link "$DOTFILES/$dir" "$HOME/.config/$dir"
+    done
+    link "$DOTFILES/tmux" "$HOME/.config/tmux"
+fi
+
+# Server configs (w0lf-mini)
+if [[ "$HOSTNAME" == "w0lf-mini" ]]; then
+    info "Server mode: linking minimal configs..."
+    mkdir -p "$HOME/.config/tmux"
+    link "$DOTFILES/tmux/tmux-server.conf" "$HOME/.config/tmux/tmux.conf"
+fi
 
 echo ""
 info "Done! Restart your shell or run 'source ~/.zshrc'"
