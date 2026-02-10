@@ -134,13 +134,13 @@ alias em='emacsclient -t -a ""'
 # Unalias first to allow functions to take precedence
 unalias .. ... .... 2>/dev/null
 
-..() {
+function .. {
   if [ -z "$1" ]; then cd ..; else cd "../$1"; fi
 }
-...() {
+function ... {
   if [ -z "$1" ]; then cd ../..; else cd "../../$1"; fi
 }
-....() {
+function .... {
   if [ -z "$1" ]; then cd ../../..; else cd "../../../$1"; fi
 }
 
