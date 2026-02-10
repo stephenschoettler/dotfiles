@@ -34,10 +34,9 @@ link "$DOTFILES/shell/.zshrc"   "$HOME/.zshrc"
 link "$DOTFILES/shell/.aliases" "$HOME/.aliases"
 
 # Common configs (all machines)
-for dir in eza pikaur; do
+for dir in eza pikaur nvim; do
     link "$DOTFILES/$dir" "$HOME/.config/$dir"
 done
-link "$DOTFILES/lazyvim" "$HOME/.config/nvim"
 
 # Desktop-only configs (slim5)
 if [[ "$HOSTNAME" == "slim5" ]]; then

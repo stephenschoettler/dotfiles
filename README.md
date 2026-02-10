@@ -21,7 +21,7 @@ Personal configuration files for two Arch Linux machines, managed with a unified
 | `waybar/` | Waybar status bar (Dracula theme) | ✔ | — |
 | `cava/` | CAVA audio visualizer | ✔ | — |
 | `pikaur/` | Pikaur AUR helper | ✔ | ✔ |
-| `lazyvim/` | LazyVim config (theme, keymaps, plugins) → `~/.config/nvim` | ✔ | ✔ |
+| `nvim/` | LazyVim config (theme, keymaps, plugins) | ✔ | ✔ |
 | `wallpaper/` | Wallpapers (Dracula themed) | ✔ | — |
 
 \* w0lf-mini uses `tmux/tmux-server.conf` — same keybindings, no GPU/desktop status scripts.
@@ -40,7 +40,7 @@ The script detects the hostname (`slim5` or `w0lf-mini`) and symlinks the approp
 
 - **Tmux keybindings** mirror Hyprland (`Alt+h/j/k/l` for navigation) for muscle-memory consistency.
 - **Dracula** color scheme throughout (Hyprland, Waybar, Kitty, Tmux).
-- Server config is intentionally minimal — shell, eza, pikaur, lazyvim, and tmux only.
+- Server config is intentionally minimal — shell, eza, pikaur, nvim, and tmux only.
 
 ## License
 
