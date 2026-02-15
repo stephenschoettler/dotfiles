@@ -33,6 +33,11 @@ echo ""
 link "$DOTFILES/shell/.zshrc"   "$HOME/.zshrc"
 link "$DOTFILES/shell/.aliases" "$HOME/.aliases"
 
+# Git config (all machines)
+link "$DOTFILES/git/.gitconfig" "$HOME/.gitconfig"
+mkdir -p "$HOME/.config/git"
+link "$DOTFILES/git/ignore" "$HOME/.config/git/ignore"
+
 # Common configs (all machines)
 for dir in eza pikaur nvim; do
     link "$DOTFILES/$dir" "$HOME/.config/$dir"
