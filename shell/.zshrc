@@ -5,7 +5,7 @@
 # --------------------------
 export EDITOR=nvim 
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
-export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="$HOME/.npm-packages/bin:$PATH"
 
 # CUDA
 export PATH="/opt/cuda/bin:$PATH"
@@ -253,3 +253,6 @@ eval "$(zoxide init zsh)"
 . "$HOME/.local/bin/env"
 
 alias claude-mem='bun "/home/w0lf/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+
+# KeePass vault master password
+export KEEPASS_MASTER="5LvUoMC27sgtJ0JtXUfhBe3xOCblQFzb"
