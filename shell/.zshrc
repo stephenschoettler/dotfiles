@@ -256,3 +256,4 @@ alias claude-mem='bun "/home/w0lf/.claude/plugins/marketplaces/thedotmack/plugin
 
 # KeePass vault master password
 export KEEPASS_MASTER="5LvUoMC27sgtJ0JtXUfhBe3xOCblQFzb"
+export KEEPASS_DB="/home/w0lf/.keys/shared.kdbx"
