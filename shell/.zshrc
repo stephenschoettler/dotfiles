@@ -250,7 +250,7 @@ eval "$(zoxide init zsh)"
 [ -s "/home/w0lf/.bun/_bun" ] && source "/home/w0lf/.bun/_bun"
 
 
-. "$HOME/.local/bin/env"
+[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
 alias claude-mem='bun "/home/w0lf/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
 
