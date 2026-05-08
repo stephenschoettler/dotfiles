@@ -1,39 +1,86 @@
 # Hyprland Helper Scripts
 
-This directory contains various shell scripts used to enhance the Hyprland experience. These scripts handle workspace management, clipboard history, UI elements, and system interactions.
+This directory contains shell helpers for the Hyprland session: display hotplug reconciliation, workspace routing, clipboard history, lock-screen text, screenshots, and system interactions.
 
-## Scripts
+## Display / monitor hotplug
 
-### `cliphist_selector.sh`
-**Description:** Launches a clipboard history selector using `wofi` and `cliphist`.
-**Usage:** Bind to a key (e.g., `SUPER + V`) to quickly select and copy items from your clipboard history.
-**Dependencies:** `cliphist`, `wofi`, `wl-clipboard`
+### `display_profile.sh`
+**Description:** Detects the active laptop output and external output from `hyprctl monitors -j`, then reconciles monitor layout and workspace placement.
 
-### `get_ascii_time.sh`
-**Description:** Generates a 3-line ASCII art representation of the current time (including AM/PM and Date). The output is formatted with Pango markup, specifically designed for `hyprlock`.
-**Style:** Uses the Dracula color theme (Green #50FA7B) for the text.
+**Commands:**
+- `./display_profile.sh status` prints `mode=<mode> laptop=<output> external=<output> external_count=<n>`.
+- `./display_profile.sh apply` applies the current profile.
+- `./display_profile.sh repair` applies the profile, then focuses the laptop and workspace 1.
 
-### `greeting.sh`
-**Description:** Outputs a simple greeting message (e.g., "Hi, user! :)").
-**Usage:** Intended for use in status bars or lock screens (like `hyprlock`) to display a personalized welcome message.
+**Policy:**
+- Dual monitor: external at `0x0`, laptop to the right, workspaces `1-10` on laptop and `11-20` on external.
+- Laptop-only: laptop at `0x0`, workspaces `1-20` moved to the laptop so windows remain reachable.
 
-### `swap_pair.sh`
-**Description:** Moves the currently focused window between a "base" workspace and its paired workspace (Base + 10).
-**Logic:**
-- If the window is on Workspace 1, it moves to Workspace 11.
-- If the window is on Workspace 11, it moves to Workspace 1.
-- Otherwise, it moves to the Base workspace.
-**Usage:** `./swap_pair.sh <workspace_number>` (e.g., `./swap_pair.sh 1`)
+### `monitor_hotplug_watcher.sh`
+**Description:** Watches Hyprland socket2 events and runs `display_profile.sh apply` after `monitoradded`, `monitorremoved`, or `configreloaded` events.
 
-### `swap_workspaces.sh`
-**Description:** Toggles the assignment of workspace groups between two monitors (Laptop and External).
-**Functionality:**
-- **Normal Mode:** Workspaces 1-10 on Laptop, 11-20 on External.
-- **Inverted Mode:** Workspaces 1-10 on External, 11-20 on Laptop.
-**Usage:** Execute to instantly swap entire workspace groups between screens.
+**Notes:**
+- Uses `$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock`.
+- Debounces events for about one second.
+- Uses a runtime lock so only one watcher remains active.
+
+## Workspace management
 
 ### `workspace_handler.sh`
-**Description:** Advanced workspace switching logic that respects monitor context. It determines whether to switch to the "Base" workspace (e.g., 1) or its "Alt" pair (e.g., 11) based on which monitor is currently focused.
+**Description:** Context-aware workspace switching for the paired workspace model.
+
+**Logic:**
+- In dual mode, if the external monitor is focused, key `N` targets workspace `N+10`.
+- Otherwise, key `N` targets workspace `N`.
+- In laptop-only mode, key `N` always targets workspace `N` so windows are not sent to unavailable outputs.
+
 **Usage:**
 - Switch workspace: `./workspace_handler.sh workspace <base_num>`
 - Move window: `./workspace_handler.sh movetoworkspace <base_num>`
+
+### `swap_pair.sh`
+**Description:** Moves the focused window between a base workspace and its paired workspace.
+
+**Logic:**
+- If the window is on workspace `1`, it moves to `11`.
+- If the window is on workspace `11`, it moves to `1`.
+- Otherwise, it moves to the base workspace.
+
+**Usage:** `./swap_pair.sh <workspace_number>`
+
+### `swap_workspaces.sh`
+**Description:** Toggles the assignment of workspace groups between the detected laptop and external monitor.
+
+**Functionality:**
+- Default: workspaces `1-10` on laptop, `11-20` on external.
+- Inverted: workspaces `1-10` on external, `11-20` on laptop.
+- Laptop-only: restores the laptop-only profile and exits.
+
+### `move_current_workspace_to_monitor.sh`
+**Description:** Moves the active workspace to the previous or next active monitor by runtime monitor geometry. This avoids hard-coded monitor names.
+
+**Usage:**
+- `./move_current_workspace_to_monitor.sh next`
+- `./move_current_workspace_to_monitor.sh prev`
+
+## Screenshots
+
+### `screenshot_output.sh`
+**Description:** Screenshots a runtime-detected output.
+
+**Usage:**
+- `./screenshot_output.sh focused`
+- `./screenshot_output.sh laptop`
+- `./screenshot_output.sh external`
+
+## Other scripts
+
+### `cliphist_selector.sh`
+**Description:** Launches a clipboard history selector using `wofi` and `cliphist`.
+**Dependencies:** `cliphist`, `wofi`, `wl-clipboard`
+
+### `get_ascii_time.sh`
+**Description:** Generates a 3-line ASCII art representation of the current time for `hyprlock`.
+
+### `greeting.sh`
+**Description:** Outputs a simple greeting message for status bars or lock screens.

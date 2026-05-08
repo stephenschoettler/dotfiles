@@ -1,71 +1,86 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Context-aware workspace switch/move for the paired workspace model.
+# Uses live workspace placement, so it still works after global workspace swaps.
 
-# --- Configuration ---
-LAPTOP_MONITOR="eDP-2"
-EXTERNAL_MONITOR="HDMI-A-1"
-# ---------------------
+set -u
 
-# Arguments
-ACTION=$1
-BASE=$2
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+# shellcheck source=monitor_lib.sh
+source "$SCRIPT_DIR/monitor_lib.sh"
 
-if [[ -z "$BASE" ]]; then
-    # Default fallback if something goes wrong
-    exit 1
+hypr_require_cmds hyprctl jq || exit 1
+
+usage() {
+    echo "Usage: ${0##*/} <workspace|movetoworkspace> <0-9|10>" >&2
+}
+
+ACTION=${1:-}
+KEY=${2:-}
+
+case "$ACTION" in
+    workspace|movetoworkspace) ;;
+    *) usage; exit 2 ;;
+esac
+
+if [[ ! "$KEY" =~ ^[0-9]+$ ]]; then
+    usage
+    exit 2
 fi
 
-# Map 0 to 10
+BASE=$KEY
 if [[ "$BASE" -eq 0 ]]; then
     BASE=10
 fi
 
+if (( BASE < 1 || BASE > 10 )); then
+    echo "Workspace key must be 0-9 or 10" >&2
+    exit 2
+fi
+
 ALT=$((BASE + 10))
 
-# Get formatted monitors JSON once
-MONITORS_INFO=$(hyprctl monitors -j)
+MONITORS_INFO=$(hypr_active_monitors_json)
 WORKSPACES_INFO=$(hyprctl workspaces -j)
+CURRENT_MONITOR=$(hypr_focused_monitor "$MONITORS_INFO")
+EXTERNAL_MONITOR=$(hypr_external_monitor "$MONITORS_INFO")
 
-# Get Active Monitor
-CURRENT_MONITOR=$(echo "$MONITORS_INFO" | jq -r '.[] | select(.focused == true).name')
+MON_BASE=$(jq -r --argjson id "$BASE" '[.[] | select(.id == $id)][0].monitor // empty' <<<"$WORKSPACES_INFO")
+MON_ALT=$(jq -r --argjson id "$ALT" '[.[] | select(.id == $id)][0].monitor // empty' <<<"$WORKSPACES_INFO")
 
-# Find monitors for the pair
-MON_BASE=$(echo "$WORKSPACES_INFO" | jq -r ".[] | select(.id == $BASE).monitor")
-MON_ALT=$(echo "$WORKSPACES_INFO" | jq -r ".[] | select(.id == $ALT).monitor")
-
-TARGET=""
-
-if [[ "$ACTION" == "movetoworkspace" ]]; then
-    # Move active window to workspace logic
-    # We move to the workspace associated with the CURRENT monitor, or default
-    if [[ "$MON_BASE" == "$CURRENT_MONITOR" ]]; then
-        TARGET=$BASE
-    elif [[ "$MON_ALT" == "$CURRENT_MONITOR" ]]; then
-        TARGET=$ALT
+fallback_target_for_current_monitor() {
+    # Laptop-only or ambiguous focus should never target unavailable alt workspaces.
+    if [[ -n "$EXTERNAL_MONITOR" && -n "$CURRENT_MONITOR" ]] && ! hypr_is_laptop_monitor_name "$CURRENT_MONITOR"; then
+        printf '%s\n' "$ALT"
     else
-        # Fallback: Current monitor has neither?
-        # Use standard convention: Laptop -> Base, External -> Alt
-        if [[ "$CURRENT_MONITOR" == "$EXTERNAL_MONITOR" ]]; then
-            TARGET=$ALT
-        else
-            TARGET=$BASE
-        fi
+        printf '%s\n' "$BASE"
     fi
-    hyprctl dispatch movetoworkspace "$TARGET"
+}
 
-elif [[ "$ACTION" == "workspace" ]]; then
-    # Switch workspace logic
-    if [[ "$MON_BASE" == "$CURRENT_MONITOR" ]]; then
-        TARGET=$BASE
-    elif [[ "$MON_ALT" == "$CURRENT_MONITOR" ]]; then
-        TARGET=$ALT
-    else
-        # Neither is on current monitor.
-        # Check standard assignment
-        if [[ "$CURRENT_MONITOR" == "$EXTERNAL_MONITOR" ]]; then
-            TARGET=$ALT
-        else
-            TARGET=$BASE
-        fi
+target_for_pair() {
+    # Laptop-only always uses base workspaces so number keys do not jump to 11-20.
+    if [[ -z "$EXTERNAL_MONITOR" ]]; then
+        printf '%s\n' "$BASE"
+        return
     fi
-    hyprctl dispatch workspace "$TARGET"
-fi
+
+    # If either member of the pair already lives on this monitor, follow reality.
+    # This preserves the global swap workflow where 1-10 and 11-20 can be inverted.
+    if [[ -n "$CURRENT_MONITOR" && "$MON_BASE" == "$CURRENT_MONITOR" ]]; then
+        printf '%s\n' "$BASE"
+    elif [[ -n "$CURRENT_MONITOR" && "$MON_ALT" == "$CURRENT_MONITOR" ]]; then
+        printf '%s\n' "$ALT"
+    else
+        fallback_target_for_current_monitor
+    fi
+}
+
+TARGET=$(target_for_pair)
+
+case "$ACTION" in
+    workspace)
+        hyprctl dispatch workspace "$TARGET" >/dev/null
+        ;;
+    movetoworkspace)
+        hyprctl dispatch movetoworkspace "$TARGET" >/dev/null
+        ;;
+esac
