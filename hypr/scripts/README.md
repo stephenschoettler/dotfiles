@@ -4,11 +4,14 @@ This directory contains shell helpers for the Hyprland session: display hotplug 
 
 ## Display / monitor hotplug
 
+### `monitor_lib.sh`
+**Description:** Shared runtime monitor detection helpers used by the display and workspace scripts. Not intended to be run directly.
+
 ### `display_profile.sh`
 **Description:** Detects the active laptop output and external output from `hyprctl monitors -j`, then reconciles monitor layout and workspace placement.
 
 **Commands:**
-- `./display_profile.sh status` prints `mode=<mode> laptop=<output> external=<output> external_count=<n>`.
+- `./display_profile.sh status` prints `mode=<mode> laptop=<output> external=<output> focused=<output> externals=<n>`.
 - `./display_profile.sh apply` applies the current profile.
 - `./display_profile.sh repair` applies the profile, then focuses the laptop and workspace 1.
 
