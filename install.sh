@@ -40,8 +40,8 @@ done
 
 # Desktop-only configs (slim5)
 if [[ "$HOSTNAME" == "slim5" ]]; then
-    info "Desktop mode: linking Hyprland, Waybar, Kitty, Cava..."
-    for dir in hypr kitty waybar cava; do
+    info "Desktop mode: linking Hyprland, Waybar, SwayNC, Wofi, Kitty, Cava..."
+    for dir in hypr kitty waybar swaync wofi cava; do
         link "$DOTFILES/$dir" "$HOME/.config/$dir"
     done
     link "$DOTFILES/tmux" "$HOME/.config/tmux"

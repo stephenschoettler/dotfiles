@@ -79,8 +79,10 @@ This directory contains shell helpers for the Hyprland session: display hotplug 
 ## Other scripts
 
 ### `cliphist_selector.sh`
-**Description:** Launches a clipboard history selector using `wofi` and `cliphist`.
-**Dependencies:** `cliphist`, `wofi`, `wl-clipboard`
+**Description:** Launches a Dracula-styled clipboard history selector using `wofi` and `cliphist`.
+**Behavior:** Includes a clear-history row with a second confirmation before `cliphist wipe`.
+**Style:** `cliphist_selector.css`
+**Dependencies:** `awk`, `cliphist`, `wofi`, `wl-clipboard`
 
 ### `get_ascii_time.sh`
 **Description:** Generates a 3-line ASCII art representation of the current time for `hyprlock`.

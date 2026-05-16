@@ -1,0 +1,100 @@
+@define-color bg #282a36;
+@define-color surface #343746;
+@define-color surface_alt #3f4254;
+@define-color current_line #44475a;
+@define-color foreground #f8f8f2;
+@define-color muted #b8b8c8;
+@define-color comment #6272a4;
+@define-color purple #bd93f9;
+@define-color pink #ff79c6;
+@define-color green #50fa7b;
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 14px;
+}
+
+window {
+    background-color: rgba(40, 42, 54, 0.98);
+    border: 2px solid @purple;
+    border-radius: 16px;
+    color: @foreground;
+}
+
+#outer-box {
+    margin: 14px;
+    padding: 4px;
+    background-color: transparent;
+}
+
+#input {
+    margin: 0 0 12px 0;
+    padding: 10px 14px;
+    border: 1px solid @comment;
+    border-radius: 12px;
+    background-color: @surface;
+    color: @foreground;
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: none;
+}
+
+#input:focus {
+    border-color: @purple;
+}
+
+#scroll {
+    margin: 0;
+    border: none;
+    background-color: transparent;
+}
+
+#inner-box {
+    background-color: transparent;
+}
+
+#entry {
+    margin: 4px 0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background-color: @surface;
+    color: @foreground;
+}
+
+#entry:selected {
+    background-color: @purple;
+    color: @bg;
+}
+
+#entry:selected label {
+    color: @bg;
+    font-weight: 900;
+}
+
+#entry label {
+    color: @foreground;
+    font-weight: 600;
+}
+
+#entry:hover {
+    background-color: @surface_alt;
+}
+
+#entry:selected:hover {
+    background-color: @pink;
+}
+
+scrollbar {
+    background-color: transparent;
+    border: none;
+}
+
+scrollbar slider {
+    min-width: 6px;
+    border-radius: 999px;
+    background-color: @current_line;
+}
+
+scrollbar slider:hover {
+    background-color: @purple;
+}
