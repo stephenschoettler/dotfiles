@@ -1,22 +1,4 @@
-@define-color bg #282a36;
-@define-color panel rgba(24, 25, 34, 0.94);
-@define-color surface rgba(52, 55, 70, 0.74);
-@define-color surface_solid #343746;
-@define-color surface_hover rgba(68, 71, 90, 0.58);
-@define-color selection rgba(189, 147, 249, 0.24);
-@define-color selection_hover rgba(189, 147, 249, 0.31);
-@define-color selection_border rgba(189, 147, 249, 0.62);
-@define-color border rgba(248, 248, 242, 0.10);
-@define-color foreground #f8f8f2;
-@define-color muted #b8b8c8;
-@define-color comment #6272a4;
-@define-color red #ff5555;
-@define-color orange #ffb86c;
-@define-color yellow #f1fa8c;
-@define-color green #50fa7b;
-@define-color cyan #8be9fd;
-@define-color purple #bd93f9;
-@define-color pink #ff79c6;
+@import "theme.css";
 
 * {
   font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
@@ -94,7 +76,7 @@ notificationwindow,
 .notification.critical,
 .notification-row .notification-background .notification.critical {
   border-left: 4px solid @red;
-  background: rgba(68, 39, 52, 0.94);
+  background: @critical_background;
 }
 
 .notification-default-action {

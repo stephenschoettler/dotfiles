@@ -1,0 +1,51 @@
+{
+  "id": "dracula",
+  "label": "Dracula",
+  "wallpaper": "wallpaper/Dracula/dracula (11).png",
+  "wallpaper_fit": "cover",
+  "monitors": ["eDP-2", "HDMI-A-1", "DP-1"],
+  "hypr": {
+    "rounding": 10
+  },
+  "kitty": {
+    "background_opacity": "0.80"
+  },
+  "colors": {
+    "background": "#282a36",
+    "foreground": "#f8f8f2",
+    "muted": "#b8b8c8",
+    "comment": "#6272a4",
+    "current_line": "#44475a",
+    "selection": "#44475a",
+    "cyan": "#8be9fd",
+    "green": "#50fa7b",
+    "orange": "#ffb86c",
+    "pink": "#ff79c6",
+    "purple": "#bd93f9",
+    "red": "#ff5555",
+    "yellow": "#f1fa8c",
+    "panel": "rgba(24, 25, 34, 0.94)",
+    "surface": "rgba(52, 55, 70, 0.74)",
+    "surface_alt": "#343746",
+    "surface_hover": "rgba(68, 71, 90, 0.58)",
+    "selection_hover": "rgba(189, 147, 249, 0.31)",
+    "selection_border": "rgba(189, 147, 249, 0.62)",
+    "border": "rgba(248, 248, 242, 0.10)",
+    "hypr_active_border": "rgba(bd93f9ff) rgba(ff79c6ff) 45deg",
+    "hypr_inactive_border": "rgba(595959aa)",
+    "lock_background_rgba": "rgba(40, 42, 54, 1.0)",
+    "lock_foreground_rgba": "rgba(248, 248, 242, 1.0)",
+    "lock_accent_rgb": "rgb(189, 147, 249)",
+    "lock_accent_rgba": "rgba(189, 147, 249, 1.0)",
+    "lock_check_rgb": "rgb(255, 184, 108)",
+    "lock_fail_rgb": "rgb(255, 85, 85)",
+    "waybar_panel": "rgba(40, 42, 54, 0.80)",
+    "waybar_gradient_start": "rgba(255, 121, 198, 0.80)",
+    "waybar_gradient_end": "rgba(189, 147, 249, 0.80)",
+    "waybar_active_foreground": "#1e1e2e",
+    "waybar_urgent_background": "#f38ba8",
+    "swaync_panel": "rgba(40, 42, 54, 0.97)",
+    "swaync_critical_background": "rgba(68, 39, 52, 0.98)",
+    "wofi_window_background": "rgba(40, 42, 54, 0.98)"
+  }
+}

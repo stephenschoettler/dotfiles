@@ -1,15 +1,4 @@
-@define-color bg #282a36;
-@define-color panel rgba(24, 25, 34, 0.94);
-@define-color surface rgba(52, 55, 70, 0.74);
-@define-color surface_hover rgba(68, 71, 90, 0.58);
-@define-color selection rgba(189, 147, 249, 0.24);
-@define-color selection_border rgba(189, 147, 249, 0.62);
-@define-color border rgba(248, 248, 242, 0.10);
-@define-color foreground #f8f8f2;
-@define-color muted #b8b8c8;
-@define-color comment #6272a4;
-@define-color purple #bd93f9;
-@define-color pink #ff79c6;
+@import "theme.css";
 
 * {
     font-family: "Noto Sans", "JetBrainsMono Nerd Font", sans-serif;
@@ -20,7 +9,7 @@ window,
 #window {
     margin: 0;
     padding: 0;
-    background-color: @panel;
+    background-color: @launcher_background;
     border: 1px solid @selection_border;
     border-radius: 24px;
     color: @foreground;
@@ -49,7 +38,7 @@ window,
 
 #input:focus {
     border-color: @selection_border;
-    background-color: rgba(58, 61, 78, 0.86);
+    background-color: @surface_hover;
 }
 
 #scroll {
@@ -87,7 +76,7 @@ window,
 }
 
 #entry:selected:hover {
-    background-color: rgba(189, 147, 249, 0.31);
+    background-color: @selection_hover;
 }
 
 #entry:selected #text,

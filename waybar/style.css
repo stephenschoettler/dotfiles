@@ -25,9 +25,9 @@ tooltip label {
 #workspaces {
     margin: 2px;
     padding: 1px 2px;
-    border: 1px solid rgba(189, 147, 249, 0.18);
+    border: 1px solid @selection-border;
     border-radius: 10px;
-    background: rgba(40, 42, 54, 0.84);
+    background: @panel;
 }
 
 #workspaces button {
@@ -51,46 +51,40 @@ tooltip label {
 }
 
 #workspaces button.active {
-    color: #1e1e2e;
-    background: -gtk-gradient(linear, left top, left bottom,
-        from(rgba(189, 147, 249, 0.96)),
-        to(rgba(255, 121, 198, 0.58)));
+    color: @active-foreground;
+    background: linear-gradient(to bottom, @gradient-end, @gradient-start);
 }
 
 #workspaces button:hover {
     color: @foreground;
-    background: rgba(189, 147, 249, 0.18);
+    background: @selection-hover;
 }
 
 #workspaces button.active:hover {
-    color: #1e1e2e;
-    background: -gtk-gradient(linear, left top, left bottom,
-        from(rgba(189, 147, 249, 0.96)),
-        to(rgba(255, 121, 198, 0.58)));
+    color: @active-foreground;
+    background: linear-gradient(to bottom, @gradient-end, @gradient-start);
 }
 
 #workspaces button.urgent {
-    color: #FF5555;
+    color: @red;
     padding: 0 5px 0 1px;
-    background: rgba(255, 85, 85, 0.16);
-    box-shadow: inset 0 0 0 1px #FF5555;
+    background: @urgent-background;
+    box-shadow: inset 0 0 0 1px @red;
 }
 
 #workspaces button.active.urgent {
-    color: #1e1e2e;
-    background: -gtk-gradient(linear, left top, left bottom,
-        from(rgba(189, 147, 249, 0.96)),
-        to(rgba(255, 121, 198, 0.58)));
-    box-shadow: inset 0 -2px 0 #FF5555;
+    color: @active-foreground;
+    background: linear-gradient(to bottom, @gradient-end, @gradient-start);
+    box-shadow: inset 0 -2px 0 @red;
 }
 
 #clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #custom-media, #tray, #custom-power, #custom-night-light, #idle_inhibitor, #window {
-    color: rgba(248, 248, 242, 0.88);
+    color: @foreground;
     padding: 0 10px;
     margin: 2px;
-    border: 1px solid rgba(189, 147, 249, 0.18);
+    border: 1px solid @selection-border;
     border-radius: 10px;
-    background: rgba(40, 42, 54, 0.84);
+    background: @panel;
     min-width: 10px;
     min-height: 24px;
 }
@@ -103,13 +97,13 @@ tooltip label {
 
 #battery.charging {
     color: @yellow;
-    border-color: rgba(241, 250, 140, 0.32);
+    border-color: @yellow;
 }
 
 #battery.warning:not(.charging),
 #battery.critical:not(.charging) {
     color: @red;
-    border-color: rgba(255, 85, 85, 0.38);
+    border-color: @red;
 }
 
 #battery.full {
@@ -132,7 +126,7 @@ tooltip label {
 
 #network.disconnected {
     color: @red;
-    border-color: rgba(255, 85, 85, 0.38);
+    border-color: @red;
 }
 
 #pulseaudio {
@@ -141,7 +135,7 @@ tooltip label {
 
 #pulseaudio.muted {
     color: @comment;
-    border-color: rgba(98, 114, 164, 0.35);
+    border-color: @comment;
 }
 
 #tray {
@@ -154,24 +148,24 @@ tooltip label {
 }
 
 #custom-power {
-    color: rgba(248, 248, 242, 0.92);
+    color: @foreground;
     border: none;
     margin: 2px;
 }
 
 #custom-night-light {
-    color: rgba(248, 248, 242, 0.88);
+    color: @foreground;
 }
 
 #custom-night-light.on,
 #custom-night-light.off {
-    color: rgba(248, 248, 242, 0.92);
-    border-color: rgba(189, 147, 249, 0.18);
+    color: @foreground;
+    border-color: @selection-border;
 }
 
 #custom-night-light.missing {
     color: @red;
-    border-color: rgba(255, 85, 85, 0.38);
+    border-color: @red;
 }
 
 #idle_inhibitor {
@@ -195,4 +189,3 @@ window#waybar.empty #window {
     padding: 0;
     background: transparent;
 }
-

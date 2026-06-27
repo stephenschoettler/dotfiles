@@ -1,0 +1,51 @@
+{
+  "id": "sailor",
+  "label": "Sailor Moon",
+  "wallpaper": "wallpaper/sailor_moon_wallpaper.jpg",
+  "wallpaper_fit": "cover",
+  "monitors": ["eDP-2", "HDMI-A-1", "DP-1"],
+  "hypr": {
+    "rounding": 12
+  },
+  "kitty": {
+    "background_opacity": "0.82"
+  },
+  "colors": {
+    "background": "#171625",
+    "foreground": "#fff4f9",
+    "muted": "#d9b8d0",
+    "comment": "#8f7aa8",
+    "current_line": "#30283f",
+    "selection": "#463457",
+    "cyan": "#8bd3ff",
+    "green": "#8fffd2",
+    "orange": "#ffb377",
+    "pink": "#ff8fcf",
+    "purple": "#b8a5ff",
+    "red": "#ff6b8f",
+    "yellow": "#fff18f",
+    "panel": "rgba(23, 22, 37, 0.94)",
+    "surface": "rgba(48, 40, 63, 0.76)",
+    "surface_alt": "#30283f",
+    "surface_hover": "rgba(70, 52, 87, 0.66)",
+    "selection_hover": "rgba(255, 143, 207, 0.30)",
+    "selection_border": "rgba(255, 143, 207, 0.66)",
+    "border": "rgba(255, 244, 249, 0.12)",
+    "hypr_active_border": "rgba(ff8fcfff) rgba(8bd3ffff) 45deg",
+    "hypr_inactive_border": "rgba(463457aa)",
+    "lock_background_rgba": "rgba(23, 22, 37, 1.0)",
+    "lock_foreground_rgba": "rgba(255, 244, 249, 1.0)",
+    "lock_accent_rgb": "rgb(255, 143, 207)",
+    "lock_accent_rgba": "rgba(255, 143, 207, 1.0)",
+    "lock_check_rgb": "rgb(255, 241, 143)",
+    "lock_fail_rgb": "rgb(255, 107, 143)",
+    "waybar_panel": "rgba(23, 22, 37, 0.82)",
+    "waybar_gradient_start": "rgba(255, 143, 207, 0.82)",
+    "waybar_gradient_end": "rgba(139, 211, 255, 0.82)",
+    "waybar_active_foreground": "#171625",
+    "waybar_urgent_background": "#ff6b8f",
+    "swaync_panel": "rgba(23, 22, 37, 0.97)",
+    "swaync_critical_background": "rgba(93, 35, 63, 0.98)",
+    "wofi_window_background": "rgba(23, 22, 37, 0.98)"
+  }
+}
