@@ -23,144 +23,168 @@ tooltip label {
 }
 
 #workspaces {
-  background-color: transparent;
+    margin: 2px;
+    padding: 1px 2px;
+    border: 1px solid rgba(189, 147, 249, 0.18);
+    border-radius: 10px;
+    background: rgba(40, 42, 54, 0.84);
 }
 
 #workspaces button {
-  border-radius: 10px;
-  background-color: rgba(40, 42, 54, 0.80);
-    color: #F8F8F2;
-    padding: 0 2px 0 2px;
-    margin: 2px 2px 0 2px;
-    min-width: 30px;
+    min-width: 18px;
+    min-height: 14px;
+    padding: 0 5px;
+    margin: 0 1px;
+    border-radius: 8px;
+    background: transparent;
+    color: @comment;
+    font-weight: 600;
+}
+
+#workspaces button.active,
+#workspaces button.urgent,
+#workspaces button:hover {
+    min-height: 10px;
+    padding: 0 3px;
+    margin: 2px 3px;
+    border-radius: 6px;
 }
 
 #workspaces button.active {
-  color: #1e1e2e;
-  background: linear-gradient(to right, rgba(255, 121, 198, 0.80), rgba(189, 147, 249, 0.80));
-  padding: 0 2px 0 2px;
+    color: #1e1e2e;
+    background: -gtk-gradient(linear, left top, left bottom,
+        from(rgba(189, 147, 249, 0.96)),
+        to(rgba(255, 121, 198, 0.58)));
 }
 
 #workspaces button:hover {
-  color: #1e1e2e;
-  background: linear-gradient(to right, rgba(255, 121, 198, 0.80), rgba(189, 147, 249, 0.80));
-  padding: 0 2px 0 2px;
+    color: @foreground;
+    background: rgba(189, 147, 249, 0.18);
+}
+
+#workspaces button.active:hover {
+    color: #1e1e2e;
+    background: -gtk-gradient(linear, left top, left bottom,
+        from(rgba(189, 147, 249, 0.96)),
+        to(rgba(255, 121, 198, 0.58)));
 }
 
 #workspaces button.urgent {
-  background-color: #f38ba8;
+    color: #FF5555;
+    padding: 0 5px 0 1px;
+    background: rgba(255, 85, 85, 0.16);
+    box-shadow: inset 0 0 0 1px #FF5555;
 }
 
-#clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #custom-media, #tray, #custom-power, #custom-notification, #idle_inhibitor, #window {
-    padding: 10px 10px;
-    margin: 2px 2px 0 2px;
-    border-radius: 10px;
-    background-color: rgba(40, 42, 54, 0.80);
-    min-width: 10px;
+#workspaces button.active.urgent {
+    color: #1e1e2e;
+    background: -gtk-gradient(linear, left top, left bottom,
+        from(rgba(189, 147, 249, 0.96)),
+        to(rgba(255, 121, 198, 0.58)));
+    box-shadow: inset 0 -2px 0 #FF5555;
+}
 
+#clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #custom-media, #tray, #custom-power, #custom-night-light, #idle_inhibitor, #window {
+    color: rgba(248, 248, 242, 0.88);
+    padding: 0 10px;
+    margin: 2px;
+    border: 1px solid rgba(189, 147, 249, 0.18);
+    border-radius: 10px;
+    background: rgba(40, 42, 54, 0.84);
+    min-width: 10px;
+    min-height: 24px;
 }
 
 #clock {
-      color: #F8F8F2;
-    border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
 }
 
 #battery {
-      color: #F8F8F2;
-    border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
 }
 
 #battery.charging {
     color: @yellow;
-    border: none;
+    border-color: rgba(241, 250, 140, 0.32);
 }
 
-#battery.warning:not(.charging) {
+#battery.warning:not(.charging),
+#battery.critical:not(.charging) {
     color: @red;
-    border: none;
+    border-color: rgba(255, 85, 85, 0.38);
 }
 
 #battery.full {
 }
 
 #cpu {
-    color: @pink;
-    border-top: 2px solid @pink;
 }
 
 #memory {
-    color: @cyan;
-    border-top: 2px solid @cyan;
 }
 
 #temperature {
-    color: @orange;
-    border-top: 2px solid @orange;
 }
 
 #backlight {
-      color: #F8F8F2;
-    border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
-    padding-top: 10px;
 }
 
 #network {
-      color: #F8F8F2;
-    border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
-    padding-top: 2px;
 }
 
 #network.disconnected {
     color: @red;
-    border: none;
+    border-color: rgba(255, 85, 85, 0.38);
 }
 
 #pulseaudio {
-      color: #F8F8F2;
-    border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
     padding: 0 13px 0 10px; /* Asymmetrical padding to nudge content left */
 }
 
 #pulseaudio.muted {
     color: @comment;
-    border: none;
+    border-color: rgba(98, 114, 164, 0.35);
 }
 
 #tray {
-    color: @cyan;
-    border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
-    padding-top: 10px;
-}
-#custom-power {
-      color: #F8F8F2;
-    border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
-    padding-top: 2px;
 }
 
-#custom-notification {
-      color: #F8F8F2;
+#custom-power,
+#custom-night-light {
+    padding: 0;
+    min-width: 32px;
+}
+
+#custom-power {
+    color: rgba(248, 248, 242, 0.92);
     border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
-    padding: 0 12px 0 17px;
+    margin: 2px;
+}
+
+#custom-night-light {
+    color: rgba(248, 248, 242, 0.88);
+}
+
+#custom-night-light.on,
+#custom-night-light.off {
+    color: rgba(248, 248, 242, 0.92);
+    border-color: rgba(189, 147, 249, 0.18);
+}
+
+#custom-night-light.missing {
+    color: @red;
+    border-color: rgba(255, 85, 85, 0.38);
 }
 
 #idle_inhibitor {
-      color: #F8F8F2;
-    border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
     padding: 0 15px 0 10px;
 }
+
+#idle_inhibitor.activated {
+    color: @green;
+}
+
 #window {
-    color: #F8F8F2;
-    border: none;
-    background: linear-gradient(to right, @pink, @purple) no-repeat top / 100% 2px, rgba(40, 42, 54, 0.80);
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 /* Hide hyprland/window title when workspace is empty */

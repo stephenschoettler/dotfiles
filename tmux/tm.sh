@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# 1. Try to find the lowest existing unattached session (numeric only)
+# 1. Try to find the lowest existing unattached positive-numbered session
 # list-sessions -f "#{==:#{session_attached},0}" : List only unattached
 # -F "#{session_name}" : Print session name
-# grep -E '^[0-9]+$' : Keep only numeric sessions
+# grep -E '^[1-9][0-9]*$' : Keep numeric sessions, excluding 0
 # sort -n : Sort numerically (1, 2, 10...)
 # head -n 1 : Pick the first (lowest)
-target=$(tmux list-sessions -f "#{==:#{session_attached},0}" -F "#{session_name}" 2>/dev/null | grep -E '^[0-9]+$' | sort -n | head -n 1)
+target=$(tmux list-sessions -f "#{==:#{session_attached},0}" -F "#{session_name}" 2>/dev/null | grep -E '^[1-9][0-9]*$' | sort -n | head -n 1)
 
 if [[ -n "$target" ]]; then
     echo "Attaching to existing unattached session: $target"

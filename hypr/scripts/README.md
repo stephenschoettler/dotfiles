@@ -42,12 +42,13 @@ This directory contains shell helpers for the Hyprland session: display hotplug 
 - Move window: `./workspace_handler.sh movetoworkspace <base_num>`
 
 ### `swap_pair.sh`
-**Description:** Moves the focused window between a base workspace and its paired workspace.
+**Description:** Sends the focused window to the requested workspace slot on the other monitor.
 
 **Logic:**
-- If the window is on workspace `1`, it moves to `11`.
-- If the window is on workspace `11`, it moves to `1`.
-- Otherwise, it moves to the base workspace.
+- Key `N` maps to pair `N`/`N+10` (`0` maps to `10`/`20`).
+- In dual-monitor mode, if the window is on the monitor currently owning slot `N`, it moves to slot `N+10`; if it is on the monitor owning `N+10`, it moves to slot `N`.
+- Uses live workspace placement, so global workspace swaps are honored.
+- In laptop-only mode, it falls back to the base workspace so windows stay reachable.
 
 **Usage:** `./swap_pair.sh <workspace_number>`
 
@@ -68,8 +69,19 @@ This directory contains shell helpers for the Hyprland session: display hotplug 
 
 ## Screenshots
 
+### `screenshot.sh`
+**Description:** Unified screenshot workflow using `grim`/`slurp` with runtime monitor detection and optional `swappy` annotation.
+
+**Usage:**
+- `./screenshot.sh output focused`
+- `./screenshot.sh output laptop`
+- `./screenshot.sh output external`
+- `./screenshot.sh region`
+- `./screenshot.sh clipboard`
+- `./screenshot.sh edit`
+
 ### `screenshot_output.sh`
-**Description:** Screenshots a runtime-detected output.
+**Description:** Backwards-compatible wrapper around `screenshot.sh output`.
 
 **Usage:**
 - `./screenshot_output.sh focused`
@@ -79,13 +91,35 @@ This directory contains shell helpers for the Hyprland session: display hotplug 
 ## Other scripts
 
 ### `cliphist_selector.sh`
-**Description:** Launches a Dracula-styled clipboard history selector using `wofi` and `cliphist`.
-**Behavior:** Includes a clear-history row with a second confirmation before `cliphist wipe`.
-**Style:** `cliphist_selector.css`
-**Dependencies:** `awk`, `cliphist`, `wofi`, `wl-clipboard`
+**Description:** Launches a Fuzzel/Dracula-styled clipboard history selector using `cliphist`.
+**Behavior:** Includes a clear-history row with a second confirmation before `cliphist wipe`, and shows only the most recent entries by default so the menu opens quickly.
+**Tuning:** `CLIPHIST_SELECTOR_LIMIT` defaults to `200`; `CLIPHIST_SELECTOR_PREVIEW_WIDTH` defaults to `140`.
+**Dependencies:** `awk`, `cliphist`, `fuzzel`, `wl-clipboard`
+
+### `osd_control.sh`
+**Description:** Volume, mute, brightness, and media-key wrapper. Uses SwayOSD when installed and falls back to `wpctl`, `brightnessctl`, and `playerctl`.
+By default it lets SwayOSD render on all monitors, which avoids the current Hyprland/SwayOSD `--monitor` placement quirk on this machine. Set `OSD_MONITOR_MODE=focused` or a monitor name to opt into explicit SwayOSD monitor targeting.
+
+### `night_light.sh`
+**Description:** Toggles Hyprsunset blue-light filtering and exposes a JSON status payload for Waybar.
+
+### `desktop_health.sh`
+**Description:** PASS/FAIL smoke check for Hyprland, Waybar, SwayNC, Fuzzel, scripts, live/dotfiles sync, and required desktop processes.
+
+### `start_swayosd.sh`, `start_hyprsunset.sh`, `start_polkit_agent.sh`
+**Description:** Safe autostart wrappers that no-op or fall back when optional packages are missing.
+
+### `lock_status.sh`
+**Description:** Outputs the subtle Hyprlock metadata row: user, host, and battery status when a battery is present.
+
+### `render_hyprlock_clock.py`
+**Description:** Renders the Hyprlock clock as a transparent PNG using rectangle-drawn block glyphs. This avoids Pango/font seams in Unicode block characters.
+
+### `lock_screen.sh`
+**Description:** Pre-renders the Hyprlock clock PNG before launching `hyprlock`, so the lock screen does not start with a stale clock image.
 
 ### `get_ascii_time.sh`
-**Description:** Generates a 3-line ASCII art representation of the current time for `hyprlock`.
+**Description:** Legacy text/Pango 3-line ASCII time generator retained as a fallback; Hyprlock now uses `render_hyprlock_clock.py` via an `image` widget.
 
 ### `greeting.sh`
 **Description:** Outputs a simple greeting message for status bars or lock screens.

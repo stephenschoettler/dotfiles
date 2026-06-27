@@ -1,7 +1,12 @@
 @define-color bg #282a36;
-@define-color surface #343746;
-@define-color surface_alt #3f4254;
-@define-color current_line #44475a;
+@define-color panel rgba(24, 25, 34, 0.94);
+@define-color surface rgba(52, 55, 70, 0.74);
+@define-color surface_solid #343746;
+@define-color surface_hover rgba(68, 71, 90, 0.58);
+@define-color selection rgba(189, 147, 249, 0.24);
+@define-color selection_hover rgba(189, 147, 249, 0.31);
+@define-color selection_border rgba(189, 147, 249, 0.62);
+@define-color border rgba(248, 248, 242, 0.10);
 @define-color foreground #f8f8f2;
 @define-color muted #b8b8c8;
 @define-color comment #6272a4;
@@ -14,7 +19,7 @@
 @define-color pink #ff79c6;
 
 * {
-  font-family: "JetBrainsMono Nerd Font";
+  font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
   font-size: 14px;
   color: @foreground;
 }
@@ -26,11 +31,11 @@ notificationwindow,
 }
 
 .control-center {
-  background: rgba(40, 42, 54, 0.97);
-  border: 2px solid @purple;
-  border-radius: 16px;
-  padding: 10px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  background: @panel;
+  border: 1px solid @selection_border;
+  border-radius: 24px;
+  padding: 14px;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.66);
 }
 
 .control-center-list {
@@ -39,8 +44,8 @@ notificationwindow,
 }
 
 .control-center-list-placeholder {
-  opacity: 0.65;
-  color: @muted;
+  opacity: 0.7;
+  color: @comment;
 }
 
 .notification-row {
@@ -63,11 +68,17 @@ notificationwindow,
 .notification,
 .notification-row .notification-background .notification {
   background: @surface;
-  border: 1px solid @current_line;
+  border: 1px solid @border;
   border-radius: 14px;
   padding: 0;
   margin: 0;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+
+.notification-row:hover .notification,
+.notification-row:focus .notification {
+  background: @surface_hover;
+  border-color: @selection_border;
 }
 
 .notification.low,
@@ -83,7 +94,7 @@ notificationwindow,
 .notification.critical,
 .notification-row .notification-background .notification.critical {
   border-left: 4px solid @red;
-  background: rgba(68, 39, 52, 0.98);
+  background: rgba(68, 39, 52, 0.94);
 }
 
 .notification-default-action {
@@ -96,7 +107,7 @@ notificationwindow,
 
 .notification-default-action:hover,
 .notification-action > button:hover {
-  background: @surface_alt;
+  background: @selection;
 }
 
 .notification-content {
@@ -134,9 +145,9 @@ notificationwindow,
 }
 
 .close-button {
-  background: @current_line;
+  background: @surface_hover;
   color: @foreground;
-  border: none;
+  border: 1px solid @border;
   border-radius: 999px;
   min-width: 24px;
   min-height: 24px;
@@ -148,6 +159,7 @@ notificationwindow,
 
 .close-button:hover {
   background: @red;
+  border-color: @red;
 }
 
 .notification-alt-actions {
@@ -157,9 +169,9 @@ notificationwindow,
 
 .notification-action,
 .notification-action > button {
-  background: @current_line;
+  background: @surface_hover;
   color: @foreground;
-  border: none;
+  border: 1px solid @border;
   border-radius: 10px;
   margin: 3px;
   padding: 6px 10px;
@@ -180,14 +192,14 @@ notificationwindow,
 .widget-backlight,
 .widget-mpris {
   background: @surface;
-  border: 1px solid @current_line;
-  border-radius: 14px;
+  border: 1px solid @border;
+  border-radius: 18px;
   margin: 8px 4px;
   padding: 10px;
 }
 
 .widget-title > label {
-  color: @green;
+  color: @purple;
   font-size: 18px;
   font-weight: 900;
 }
@@ -197,9 +209,9 @@ notificationwindow,
 .widget-buttons-grid button,
 .widget-menubar button,
 .widget-volume button {
-  background: @current_line;
+  background: transparent;
   color: @foreground;
-  border: none;
+  border: 1px solid @border;
   border-radius: 10px;
   padding: 6px 10px;
   font-weight: 800;
@@ -211,8 +223,9 @@ notificationwindow,
 .widget-buttons-grid button:hover,
 .widget-menubar button:hover,
 .widget-volume button:hover {
-  background: @purple;
-  color: @bg;
+  background: @selection;
+  border-color: @selection_border;
+  color: @foreground;
 }
 
 .widget-dnd label,
@@ -223,14 +236,16 @@ notificationwindow,
 }
 
 .widget-dnd switch {
-  background: @current_line;
+  background: @surface_hover;
+  border: 1px solid @border;
   border-radius: 999px;
   min-width: 46px;
   min-height: 24px;
 }
 
 .widget-dnd switch:checked {
-  background: @red;
+  background: @selection;
+  border-color: @selection_border;
 }
 
 .widget-dnd switch slider {
@@ -246,14 +261,15 @@ notificationwindow,
 }
 
 .widget-buttons-grid flowboxchild > button.toggle:checked {
-  background: @pink;
-  color: @bg;
+  background: @selection_hover;
+  border-color: @selection_border;
+  color: @foreground;
 }
 
 .widget-mpris-player {
-  border-radius: 12px;
+  border-radius: 14px;
   margin: 4px;
-  background: @current_line;
+  background: @surface_hover;
 }
 
 .widget-mpris-title {
@@ -266,7 +282,7 @@ notificationwindow,
 }
 
 scale trough {
-  background: @current_line;
+  background: @surface_hover;
   border-radius: 999px;
   min-height: 8px;
 }
@@ -284,8 +300,38 @@ scale slider {
 }
 
 .per-app-volume {
-  background: @surface_alt;
+  background: @surface_hover;
+  border: 1px solid @border;
   border-radius: 12px;
   margin: 8px 0 0 0;
   padding: 6px;
+}
+
+scrollbar,
+scrollbar trough,
+scrollbar slider,
+scrollbar button,
+scrollbar.vertical,
+scrollbar.horizontal {
+  opacity: 0;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+undershoot.top,
+undershoot.right,
+undershoot.bottom,
+undershoot.left,
+overshoot.top,
+overshoot.right,
+overshoot.bottom,
+overshoot.left {
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }

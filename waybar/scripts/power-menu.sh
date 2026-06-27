@@ -1,16 +1,43 @@
-#!/bin/bash
-entries="Lock\nShutdown\nReboot\nLogout\nSuspend"
-selected=$(echo -e $entries|wofi --width 250 --height 240 --dmenu --cache-file /dev/null | awk '{print tolower($1)}')
+#!/usr/bin/env bash
+set -euo pipefail
 
-case $selected in
-  lock)
-    exec hyprlock;;
-  logout)
-    hyprctl dispatch exit;;
-  suspend)
-    exec systemctl suspend;;
-  reboot)
-    exec systemctl reboot;;
-  shutdown)
-    exec systemctl poweroff -i;;
+if ! command -v fuzzel >/dev/null 2>&1; then
+    echo "Missing: fuzzel" >&2
+    exit 1
+fi
+
+menu() {
+    fuzzel --dmenu --only-match --match-mode=fuzzy --prompt "$1" --placeholder "Action" --width 30 --lines "$2"
+}
+
+confirm() {
+    local action=$1 selected
+    selected=$(printf '%s\n%s\n' "Cancel" "$action" | menu "$action? " 2)
+    [[ "$selected" == "$action" ]]
+}
+
+selected=$(printf '%s\n' Lock Suspend Logout Reboot Shutdown Cancel | menu "Power " 6)
+
+case "$selected" in
+    Lock)
+        exec loginctl lock-session
+        ;;
+    Suspend)
+        exec systemctl suspend
+        ;;
+    Logout)
+        confirm Logout && hyprctl dispatch exit
+        ;;
+    Reboot)
+        confirm Reboot && systemctl reboot
+        ;;
+    Shutdown)
+        confirm Shutdown && systemctl poweroff -i
+        ;;
+    Cancel|"")
+        exit 0
+        ;;
+    *)
+        exit 0
+        ;;
 esac

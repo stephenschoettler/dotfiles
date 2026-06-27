@@ -17,7 +17,7 @@
 | `SUPER + V` | Clipboard Manager | `cliphist_selector.sh` |
 | `SUPER + Q` | Close Active Window | `killactive` |
 | `SUPER + P` | Toggle Pseudo Tiling | `pseudo` |
-| `SUPER + Tab` | Toggle Split | `togglesplit` |
+| `SUPER + Tab` | Toggle Split | `layoutmsg, togglesplit` |
 | `SUPER + -` | Toggle Waybar | `pkill -SIGUSR1 waybar` |
 
 ## 🪟 Window Management
@@ -43,9 +43,12 @@
 ## 📸 Screenshots (Hyprshot)
 | Keybind | Action | Output Destination |
 | :--- | :--- | :--- |
-| `Print` | Monitor Screenshot | `~/pictures/screenshots` |
-| `SUPER + Print` | Region Screenshot | `~/pictures/screenshots` |
-| `SUPER + CTRL + Print` | Region Screenshot | Clipboard |
+| `Print` | Focused monitor screenshot | `~/pictures/screenshots` |
+| `SHIFT + Print` | Laptop monitor screenshot | `~/pictures/screenshots` |
+| `ALT + Print` | External monitor screenshot | `~/pictures/screenshots` |
+| `SUPER + Print` | Region Screenshot | Clipboard |
+| `SUPER + CTRL + Print` | Region Screenshot | `~/pictures/screenshots` |
+| `SUPER + SHIFT + Print` | Region Screenshot | Swappy editor |
 
 ## 🔊 Hardware & Media
 | Keybind | Action |

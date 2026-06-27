@@ -26,9 +26,15 @@ parse_status() {
     done
 }
 
+set_workspace_rule() {
+    local workspace=$1 monitor=$2
+    hyprctl keyword workspace "$workspace, monitor:$monitor" >/dev/null 2>&1 || true
+}
+
 move_range() {
     local start=$1 end=$2 monitor=$3 i
     for ((i = start; i <= end; i++)); do
+        set_workspace_rule "$i" "$monitor"
         hyprctl -q dispatch moveworkspacetomonitor "$i" "$monitor" >/dev/null 2>&1 || true
     done
 }

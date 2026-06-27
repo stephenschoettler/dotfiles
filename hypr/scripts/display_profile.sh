@@ -69,8 +69,20 @@ keyword_monitor() {
     fi
 }
 
-move_workspace() {
+workspace_rule() {
+    local workspace=$1 monitor=$2 out
+
+    if ! out=$(hyprctl keyword workspace "$workspace, monitor:$monitor" 2>&1); then
+        die "failed workspace rule '$workspace -> $monitor': $out"
+    fi
+}
+
+assign_workspace() {
     local workspace=$1 monitor=$2
+
+    # The rule is the important part: it makes not-yet-created workspaces open
+    # on the intended output instead of whichever monitor is currently focused.
+    workspace_rule "$workspace" "$monitor"
     hyprctl -q dispatch moveworkspacetomonitor "$workspace" "$monitor" >/dev/null 2>&1 || true
 }
 
@@ -99,10 +111,10 @@ apply_profile() {
             keyword_monitor "$laptop,preferred,auto-right,1.25"
 
             for i in {1..10}; do
-                move_workspace "$i" "$laptop"
+                assign_workspace "$i" "$laptop"
             done
             for i in {11..20}; do
-                move_workspace "$i" "$external"
+                assign_workspace "$i" "$external"
             done
 
             state="mode=dual laptop=$laptop external=$external"
@@ -114,7 +126,7 @@ apply_profile() {
             keyword_monitor "$laptop,preferred,0x0,1.25"
 
             for i in {1..20}; do
-                move_workspace "$i" "$laptop"
+                assign_workspace "$i" "$laptop"
             done
 
             state="mode=laptop-only laptop=$laptop external="

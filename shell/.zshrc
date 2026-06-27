@@ -4,7 +4,7 @@
 # 1. PATH & EDITOR
 # --------------------------
 export EDITOR=nvim 
-export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cache/.bun/bin:/usr/local/bin:$PATH"
 export PATH="$HOME/.npm-packages/bin:$PATH"
 
 # CUDA
@@ -256,3 +256,4 @@ alias claude-mem='bun "/home/w0lf/.claude/plugins/marketplaces/thedotmack/plugin
 
 # KeePass vault master password
 export KEEPASS_MASTER="5LvUoMC27sgtJ0JtXUfhBe3xOCblQFzb"
+export PATH="$HOME/.cache/.bun/bin:$PATH"

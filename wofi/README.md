@@ -1,14 +1,15 @@
 # Wofi
 
-Default Dracula Wofi launcher for Hyprland.
+Apple Spotlight-inspired Dracula Wofi launcher for Hyprland.
 
 ## Behavior
 
 - `SUPER + Return` opens `wofi --show drun` using this default config.
-- Centered 760x560 launcher.
+- Centered 720x440 launcher with a larger Spotlight-style search field.
 - Fuzzy, case-insensitive app search.
-- App icons enabled at 32px.
-- High-contrast Dracula card styling.
+- App icons enabled at 34px.
+- Minimal translucent Dracula panel with soft selected-row accent.
+- Scrollbar hidden for a cleaner launcher view.
 
 ## Files
 

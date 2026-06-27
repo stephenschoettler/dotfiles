@@ -159,6 +159,26 @@ mv....() { mv -i "$@" ../../..; }
 alias c='clear'
 
 ########################################
+# Desktop helpers
+########################################
+wb() {
+  case "$1" in
+    refresh)
+      if ! pgrep -x waybar >/dev/null 2>&1; then
+        echo "waybar is not running"
+        return 1
+      fi
+      pkill -SIGUSR2 waybar
+      echo "waybar refresh signal sent"
+      ;;
+    *)
+      echo "Usage: wb refresh"
+      return 1
+      ;;
+  esac
+}
+
+########################################
 # History
 ########################################
 alias h='history | tail -10'

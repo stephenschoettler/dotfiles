@@ -1,83 +1,84 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-# Function to get font fragment (adapted from clockexample.sh)
+readonly COLOR="#50FA7B"
+readonly TIME_SIZE="18pt"
+
 get_font_fragment() {
   local char="$1"
   local row="$2"
 
   case "$char" in
   0)
-    [ "$row" -eq 1 ] && echo -n " ▄██▄ "
-    [ "$row" -eq 2 ] && echo -n "██  ██"
-    [ "$row" -eq 3 ] && echo -n " ▀██▀ "
+    [ "$row" -eq 1 ] && printf '%s' " ▄██▄ "
+    [ "$row" -eq 2 ] && printf '%s' "██  ██"
+    [ "$row" -eq 3 ] && printf '%s' " ▀██▀ "
     ;;
   1)
-    [ "$row" -eq 1 ] && echo -n "▄██"
-    [ "$row" -eq 2 ] && echo -n " ██"
-    [ "$row" -eq 3 ] && echo -n " ██"
+    [ "$row" -eq 1 ] && printf '%s' "▄██"
+    [ "$row" -eq 2 ] && printf '%s' " ██"
+    [ "$row" -eq 3 ] && printf '%s' " ██"
     ;;
   2)
-    [ "$row" -eq 1 ] && echo -n "████▄"
-    [ "$row" -eq 2 ] && echo -n " ▄██▀"
-    [ "$row" -eq 3 ] && echo -n "███▄▄"
+    [ "$row" -eq 1 ] && printf '%s' "████▄"
+    [ "$row" -eq 2 ] && printf '%s' " ▄██▀"
+    [ "$row" -eq 3 ] && printf '%s' "███▄▄"
     ;;
   3)
-    [ "$row" -eq 1 ] && echo -n "████▄"
-    [ "$row" -eq 2 ] && echo -n " ▄▄██"
-    [ "$row" -eq 3 ] && echo -n "▄▄▄█▀"
+    [ "$row" -eq 1 ] && printf '%s' "████▄"
+    [ "$row" -eq 2 ] && printf '%s' " ▄▄██"
+    [ "$row" -eq 3 ] && printf '%s' "▄▄▄█▀"
     ;;
   4)
-    [ "$row" -eq 1 ] && echo -n "██  ██"
-    [ "$row" -eq 2 ] && echo -n "▀█████"
-    [ "$row" -eq 3 ] && echo -n "    ██"
+    [ "$row" -eq 1 ] && printf '%s' "██  ██"
+    [ "$row" -eq 2 ] && printf '%s' "▀█████"
+    [ "$row" -eq 3 ] && printf '%s' "    ██"
     ;;
   5)
-    [ "$row" -eq 1 ] && echo -n "███▀▀▀"
-    [ "$row" -eq 2 ] && echo -n "▀▀███▄"
-    [ "$row" -eq 3 ] && echo -n "▄▄▄██▀"
+    [ "$row" -eq 1 ] && printf '%s' "███▀▀▀"
+    [ "$row" -eq 2 ] && printf '%s' "▀▀███▄"
+    [ "$row" -eq 3 ] && printf '%s' "▄▄▄██▀"
     ;;
   6)
-    [ "$row" -eq 1 ] && echo -n "▄██▀▀▀"
-    [ "$row" -eq 2 ] && echo -n "██▄▄▄ "
-    [ "$row" -eq 3 ] && echo -n "▀█▄▄█▀"
+    [ "$row" -eq 1 ] && printf '%s' "▄██▀▀▀"
+    [ "$row" -eq 2 ] && printf '%s' "██▄▄▄ "
+    [ "$row" -eq 3 ] && printf '%s' "▀█▄▄█▀"
     ;;
   7)
-    [ "$row" -eq 1 ] && echo -n "██████"
-    [ "$row" -eq 2 ] && echo -n "  ▄██▀"
-    [ "$row" -eq 3 ] && echo -n " ██▀  "
+    [ "$row" -eq 1 ] && printf '%s' "██████"
+    [ "$row" -eq 2 ] && printf '%s' "  ▄██▀"
+    [ "$row" -eq 3 ] && printf '%s' " ██▀  "
     ;;
   8)
-    [ "$row" -eq 1 ] && echo -n "▄████▄"
-    [ "$row" -eq 2 ] && echo -n "██▄▄██"
-    [ "$row" -eq 3 ] && echo -n "▀█▄▄█▀"
+    [ "$row" -eq 1 ] && printf '%s' "▄████▄"
+    [ "$row" -eq 2 ] && printf '%s' "██▄▄██"
+    [ "$row" -eq 3 ] && printf '%s' "▀█▄▄█▀"
     ;;
   9)
-    [ "$row" -eq 1 ] && echo -n "▄█▀▀█▄"
-    [ "$row" -eq 2 ] && echo -n " ▀▀▀██"
-    [ "$row" -eq 3 ] && echo -n " ▄▄██▀"
+    [ "$row" -eq 1 ] && printf '%s' "▄█▀▀█▄"
+    [ "$row" -eq 2 ] && printf '%s' " ▀▀▀██"
+    [ "$row" -eq 3 ] && printf '%s' " ▄▄██▀"
     ;;
   :)
-    # Custom Colon using half-blocks
-    [ "$row" -eq 1 ] && echo -n " ▄ "
-    [ "$row" -eq 2 ] && echo -n "   "
-    [ "$row" -eq 3 ] && echo -n " ▀ "
+    [ "$row" -eq 1 ] && printf '%s' " ▄ "
+    [ "$row" -eq 2 ] && printf '%s' "   "
+    [ "$row" -eq 3 ] && printf '%s' " ▀ "
     ;;
-  *) # Space or unknown
-    echo -n "  "
+  *)
+    printf '%s' "  "
     ;;
   esac
+
+  return 0
 }
 
-# Get current time
 time_str=$(date '+%I:%M')
 ampm_str=$(date '+%p')
-date_str=$(date '+%A %B %d, %Y')
 
 line1=""
 line2=""
 line3=""
 
-# Build the 3 lines of ASCII art
 for ((i = 0; i < ${#time_str}; i++)); do
   char="${time_str:$i:1}"
   line1="${line1}$(get_font_fragment "$char" 1) "
@@ -85,13 +86,11 @@ for ((i = 0; i < ${#time_str}; i++)); do
   line3="${line3}$(get_font_fragment "$char" 3) "
 done
 
-# Color definition (Dracula Green #50FA7B)
-COLOR="#50FA7B"
-
-# Add AM/PM to the end of the 3rd line with some spacing, and pad other lines to maintain alignment
 line1="${line1}    "
 line2="${line2}    "
 line3="${line3}  ${ampm_str}"
 
-# Output formatted for hyprlock using Pango markup
-echo -e "<tt><span size='18pt' foreground='$COLOR'>$line1</span>\n<span size='18pt' foreground='$COLOR'>$line2</span>\n<span size='18pt' foreground='$COLOR'>$line3</span>\n\n<span size='12pt' foreground='$COLOR'>$date_str</span></tt>"
+printf "<tt><span size='%s' foreground='%s'>%s</span>\n<span size='%s' foreground='%s'>%s</span>\n<span size='%s' foreground='%s'>%s</span></tt>\n" \
+  "$TIME_SIZE" "$COLOR" "$line1" \
+  "$TIME_SIZE" "$COLOR" "$line2" \
+  "$TIME_SIZE" "$COLOR" "$line3"

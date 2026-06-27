@@ -7,29 +7,44 @@
         "margin-left": 2,
         "margin-right": 2,
         "height": 20,
-        "modules-left": ["hyprland/workspaces#laptop", "hyprland/window"],
-        "modules-center": ["clock"],
-        "modules-right": ["idle_inhibitor", "backlight", "pulseaudio", "battery", "tray"],
+        "modules-left": [
+            "hyprland/workspaces#laptop",
+            "hyprland/window"
+        ],
+        "modules-center": [
+            "clock"
+        ],
+        "modules-right": [
+            "custom/night-light",
+            "idle_inhibitor",
+            "backlight",
+            "pulseaudio",
+            "battery",
+            "tray",
+            "custom/power"
+        ],
         "hyprland/workspaces#laptop": {
             "active-only": false,
             "all-outputs": false,
             "format": "{icon}",
             "on-click": "activate",
+            "on-scroll-up": "hyprctl dispatch workspace e-1",
+            "on-scroll-down": "hyprctl dispatch workspace e+1",
+            "smooth-scrolling-threshold": 1,
             "format-window-separator": "\n",
-              "window-rewrite-default": "",
-              "window-rewrite": {
-            },
+            "window-rewrite-default": "",
+            "window-rewrite": {},
             "format-icons": {
-                "1": "一",
-                "2": "二",
-                "3": "三",
-                "4": "四",
-                "5": "五",
-                "6": "六",
-                "7": "七",
-                "8": "八",
-                "9": "九",
-                "10": "十",
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+                "10": "10",
                 "default": "",
                 "urgent": "",
                 "focused": ""
@@ -39,12 +54,24 @@
             "format": "{}",
             "max-length": 30,
             "rewrite": {
+                "zsh": " Terminal",
+                "^kitty$": " Terminal",
                 "(.*) - Mozilla Firefox": " $1",
                 "(.*) - Visual Studio Code": " $1",
-                "(.*)Discord(.*)": " $1",
+                "(.*)Discord(.*)": " Discord",
+                "^GitHub - Brave$": " GitHub",
+                "^Google Gemini - Brave$": " Gemini",
+                "^Amazon.com. Spend less. Smile more. - Brave$": " Amazon",
+                "^Amazon.com: (.*) - Brave$": " $1",
+                "^Google - Brave$": " Google",
+                "(.*) - Google Search - Brave$": " $1",
+                "(.*) – Doom Emacs": " $1",
                 "(.*) - Doom Emacs": " $1",
                 "(.*)Emacs(.*)": " $1",
-                "(.*) - Brave": " $1",
+                "(.*) - Thunar": " $1",
+                "(.*) - YouTube - Brave$": " $1",
+                "^YouTube - Brave$": " YouTube",
+                "(.*) - Brave$": " $1",
                 "(.*)Brave(.*)": " $1"
             },
             "separate-outputs": true
@@ -62,14 +89,17 @@
                 "phone": "",
                 "portable": "",
                 "car": "",
-                "default": ["", "", ""]
+                "default": [
+                    "",
+                    "",
+                    ""
+                ]
             },
             "on-click": "pavucontrol",
             "on-click-right": "bash ~/.config/waybar/scripts/cycle_audio_sink.sh",
             "on-scroll-up": "pamixer --allow-boost --set-limit 150 -i 5",
             "on-scroll-down": "pamixer --allow-boost --set-limit 150 -d 5"
         },
-
         "cpu": {
             "justify": "center",
             "format": "{usage}% "
@@ -82,16 +112,30 @@
             "justify": "center",
             "thermal-zone": 2,
             "format": "{temperatureC}°C {icon}",
-            "format-icons": ["", "", ""]
+            "format-icons": [
+                "",
+                "",
+                ""
+            ]
         },
         "backlight": {
             "justify": "center",
             "device": "nvidia_wmi_ec_backlight",
             "format": "{percent}% {icon}",
-            "format-icons": ["", "", "", "", "", "", "", "", ""],
+            "format-icons": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "tooltip-format": "Brightness",
-            "scroll-step": 5
-
+            "scroll-step": 5,
+            "on-click-right": "brightnessctl set 100%"
         },
         "battery": {
             "justify": "center",
@@ -105,7 +149,19 @@
             "format-plugged": "{capacity}% ",
             "format-full": "",
             "format-alt": "{time} {icon}",
-            "format-icons": ["", "", "", "", "", "", "", "", "", "", ""]
+            "format-icons": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "clock": {
             "justify": "center",
@@ -123,13 +179,8 @@
             "spacing": 10
         },
         "custom/power": {
-            "format": "⏻ ",
+            "format": "⏻\u2009",
             "on-click": "bash ~/.config/waybar/scripts/power-menu.sh"
-        },
-        "custom/notification": {
-            "format": " ",
-            "on-click": "swaync-client -t -sw",
-            "tooltip": false
         },
         "idle_inhibitor": {
             "format": "{icon}",
@@ -137,37 +188,63 @@
                 "activated": "",
                 "deactivated": ""
             }
+        },
+        "custom/night-light": {
+            "return-type": "json",
+            "exec": "~/.config/waybar/scripts/night-light-status.sh",
+            "interval": 5,
+            "on-click": "~/.config/hypr/scripts/night_light.sh toggle",
+            "on-click-right": "~/.config/hypr/scripts/night_light.sh off",
+            "tooltip": true
         }
     },
     {
-        "output": ["DP-1", "HDMI-A-1"],
+        "output": [
+            "DP-1",
+            "HDMI-A-1"
+        ],
         "layer": "top",
         "position": "top",
         "margin-top": 5,
         "margin-left": 2,
         "margin-right": 2,
         "height": 20,
-        "modules-left": ["hyprland/workspaces#external", "hyprland/window"],
-        "modules-center": ["clock"],
-        "modules-right": ["idle_inhibitor", "backlight", "pulseaudio", "battery", "tray"],
+        "modules-left": [
+            "hyprland/workspaces#external",
+            "hyprland/window"
+        ],
+        "modules-center": [
+            "clock"
+        ],
+        "modules-right": [
+            "custom/night-light",
+            "idle_inhibitor",
+            "backlight",
+            "pulseaudio",
+            "battery",
+            "tray",
+            "custom/power"
+        ],
         "hyprland/workspaces#external": {
             "active-only": false,
             "all-outputs": false,
             "format": "{icon}",
             "on-click": "activate",
-            "window-rewrite": {
-	          },
-        "format-icons": {
-                "11": "一",
-                "12": "二",
-                "13": "三",
-                "14": "四",
-                "15": "五",
-                "16": "六",
-                "17": "七",
-                "18": "八",
-                "19": "九",
-                "20": "十",
+            "on-scroll-up": "hyprctl dispatch workspace e-1",
+            "on-scroll-down": "hyprctl dispatch workspace e+1",
+            "smooth-scrolling-threshold": 1,
+            "window-rewrite": {},
+            "format-icons": {
+                "11": "1",
+                "12": "2",
+                "13": "3",
+                "14": "4",
+                "15": "5",
+                "16": "6",
+                "17": "7",
+                "18": "8",
+                "19": "9",
+                "20": "10",
                 "default": "",
                 "urgent": "",
                 "focused": ""
@@ -177,12 +254,24 @@
             "format": "{}",
             "max-length": 30,
             "rewrite": {
+                "zsh": " Terminal",
+                "^kitty$": " Terminal",
                 "(.*) - Mozilla Firefox": " $1",
                 "(.*) - Visual Studio Code": " $1",
-                "(.*)Discord(.*)": " $1",
+                "(.*)Discord(.*)": " Discord",
+                "^GitHub - Brave$": " GitHub",
+                "^Google Gemini - Brave$": " Gemini",
+                "^Amazon.com. Spend less. Smile more. - Brave$": " Amazon",
+                "^Amazon.com: (.*) - Brave$": " $1",
+                "^Google - Brave$": " Google",
+                "(.*) - Google Search - Brave$": " $1",
+                "(.*) – Doom Emacs": " $1",
                 "(.*) - Doom Emacs": " $1",
                 "(.*)Emacs(.*)": " $1",
-                "(.*) - Brave": " $1",
+                "(.*) - Thunar": " $1",
+                "(.*) - YouTube - Brave$": " $1",
+                "^YouTube - Brave$": " YouTube",
+                "(.*) - Brave$": " $1",
                 "(.*)Brave(.*)": " $1"
             },
             "separate-outputs": true
@@ -190,7 +279,7 @@
         "pulseaudio": {
             "justify": "center",
             "format": "{volume}% {icon}",
-            "max-volume": 200,
+            "max-volume": 150,
             "format-bluetooth": "{volume}% {icon}",
             "format-bluetooth-muted": "  {icon}",
             "format-icons": {
@@ -200,14 +289,17 @@
                 "phone": "",
                 "portable": "",
                 "car": "",
-                "default": ["", "", ""]
+                "default": [
+                    "",
+                    "",
+                    ""
+                ]
             },
             "on-click": "pavucontrol",
             "on-click-right": "bash ~/.config/waybar/scripts/cycle_audio_sink.sh",
             "on-scroll-up": "pamixer --allow-boost --set-limit 150 -i 5",
             "on-scroll-down": "pamixer --allow-boost --set-limit 150 -d 5"
         },
-
         "cpu": {
             "justify": "center",
             "format": "{usage}% "
@@ -220,15 +312,30 @@
             "justify": "center",
             "thermal-zone": 2,
             "format": "{temperatureC}°C {icon}",
-            "format-icons": ["", "", ""]
+            "format-icons": [
+                "",
+                "",
+                ""
+            ]
         },
         "backlight": {
             "justify": "center",
             "device": "nvidia_wmi_ec_backlight",
             "format": "{percent}% {icon}",
-            "format-icons": ["", "", "", "", "", "", "", "", ""],
+            "format-icons": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "tooltip-format": "Brightness",
-            "scroll-step": 5
+            "scroll-step": 5,
+            "on-click-right": "brightnessctl set 100%"
         },
         "battery": {
             "justify": "center",
@@ -242,7 +349,19 @@
             "format-plugged": "{capacity}% ",
             "format-full": "",
             "format-alt": "{time} {icon}",
-            "format-icons": ["", "", "", "", "", "", "", "", "", "", ""]
+            "format-icons": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "clock": {
             "justify": "center",
@@ -260,13 +379,8 @@
             "spacing": 10
         },
         "custom/power": {
-            "format": "⏻ ",
+            "format": "⏻\u2009",
             "on-click": "bash ~/.config/waybar/scripts/power-menu.sh"
-        },
-        "custom/notification": {
-            "format": " ",
-            "on-click": "swaync-client -t -sw",
-            "tooltip": false
         },
         "idle_inhibitor": {
             "format": "{icon}",
@@ -274,6 +388,14 @@
                 "activated": "",
                 "deactivated": ""
             }
+        },
+        "custom/night-light": {
+            "return-type": "json",
+            "exec": "~/.config/waybar/scripts/night-light-status.sh",
+            "interval": 5,
+            "on-click": "~/.config/hypr/scripts/night_light.sh toggle",
+            "on-click-right": "~/.config/hypr/scripts/night_light.sh off",
+            "tooltip": true
         }
     }
 ]

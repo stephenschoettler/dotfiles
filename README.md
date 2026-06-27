@@ -20,7 +20,9 @@ Personal configuration files for two Arch Linux machines, managed with a unified
 | `kitty/` | Kitty terminal | ✔ | — |
 | `waybar/` | Waybar status bar (Dracula theme) | ✔ | — |
 | `swaync/` | SwayNotificationCenter panel and notifications | ✔ | — |
-| `wofi/` | Wofi app launcher and menu theme | ✔ | — |
+| `wofi/` | Wofi fallback/menu theme for legacy script pickers | ✔ | — |
+| `fuzzel/` | Fuzzel app launcher and script menu theme | ✔ | — |
+| `swayosd/` | SwayOSD volume/brightness overlay theme | ✔ | — |
 | `cava/` | CAVA audio visualizer | ✔ | — |
 | `pikaur/` | Pikaur AUR helper | ✔ | ✔ |
 | `nvim/` | LazyVim config (theme, keymaps, plugins) | ✔ | ✔ |
