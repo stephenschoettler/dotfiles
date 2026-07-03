@@ -24,7 +24,7 @@ tooltip label {
 
 #workspaces {
     margin: 2px;
-    padding: 0 5px;
+    padding: 0 8px;
     border: none;
     box-shadow: none;
     border-radius: 10px;
@@ -33,57 +33,68 @@ tooltip label {
 }
 
 #workspaces button {
-    min-width: 16px;
-    min-height: 3px;
+    min-width: 14px;
+    min-height: 17px;
     padding: 0;
     margin: 7px 3px;
     border: none;
-    box-shadow: 0 0 5px rgba(139, 233, 253, 0.18);
+    box-shadow: none;
     border-radius: 999px;
-    background: #8BE9FD;
+    background: transparent;
+    background-image: url("assets/workspace-inactive.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px 10px;
     color: transparent;
     font-size: 0;
     font-weight: 600;
 }
 
-#workspaces button:hover {
-    min-width: 16px;
-    min-height: 3px;
+#workspaces button label {
+    min-width: 0;
+    min-height: 0;
     padding: 0;
-    margin: 7px 3px;
-    border-radius: 999px;
-    background: #8BE9FD;
-    box-shadow: 0 0 6px rgba(139, 233, 253, 0.28);
+    background: transparent;
     color: transparent;
+    font-size: 0;
+}
+
+#workspaces button:hover {
+    background: transparent;
+    background-image: url("assets/workspace-inactive.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px 10px;
+    box-shadow: none;
 }
 
 #workspaces button.active,
 #workspaces button.active:hover {
-    min-width: 50px;
-    min-height: 5px;
-    padding: 0;
-    margin: 7px 3px;
-    border-radius: 999px;
-    background: #FF79C6;
-    box-shadow: 0 0 7px rgba(255, 121, 198, 0.34);
-    color: transparent;
+    min-width: 34px;
+    background: transparent;
+    background-image: url("assets/workspace-active.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30px 10px;
+    box-shadow: none;
 }
 
 #workspaces button.urgent {
     min-width: 14px;
-    min-height: 5px;
-    padding: 0;
-    margin: 7px 3px;
-    border-radius: 999px;
-    background: rgba(255, 85, 85, 0.82);
-    box-shadow: 0 0 7px rgba(255, 85, 85, 0.34);
-    color: transparent;
+    background: transparent;
+    background-image: url("assets/workspace-urgent.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px 10px;
+    box-shadow: none;
 }
 
 #workspaces button.active.urgent {
-    min-width: 29px;
-    margin: 10px 3px;
-    background: linear-gradient(to right, #FF79C6, rgba(255, 85, 85, 0.82));
+    min-width: 34px;
+    background-image: url("assets/workspace-active-urgent.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30px 10px;
 }
 
 #clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #custom-media, #tray, #custom-power, #custom-night-light, #idle_inhibitor, #window {
