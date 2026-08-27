@@ -76,7 +76,8 @@ for script in /home/w0lf/dev/dotfiles/hypr/scripts/*.sh /home/w0lf/dev/dotfiles/
     [[ -f "$script" ]] && check_shell "$script"
 done
 
-check_cmp /home/w0lf/dev/dotfiles/hypr/hyprland.conf /home/w0lf/.config/hypr/hyprland.conf
+check_cmp /home/w0lf/dev/dotfiles/hypr/hyprland.lua /home/w0lf/.config/hypr/hyprland.lua
+check_cmp /home/w0lf/dev/dotfiles/hypr/theme.lua /home/w0lf/.config/hypr/theme.lua
 check_cmp /home/w0lf/dev/dotfiles/hypr/hyprsunset.conf /home/w0lf/.config/hypr/hyprsunset.conf
 check_cmp /home/w0lf/dev/dotfiles/fuzzel/fuzzel.ini /home/w0lf/.config/fuzzel/fuzzel.ini
 check_cmp /home/w0lf/dev/dotfiles/swayosd/style.css /home/w0lf/.config/swayosd/style.css

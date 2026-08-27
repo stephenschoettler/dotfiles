@@ -83,7 +83,7 @@ assign_workspace() {
     # The rule is the important part: it makes not-yet-created workspaces open
     # on the intended output instead of whichever monitor is currently focused.
     workspace_rule "$workspace" "$monitor"
-    hyprctl -q dispatch moveworkspacetomonitor "$workspace" "$monitor" >/dev/null 2>&1 || true
+    hyprctl -q dispatch "hl.dsp.workspace.move({ workspace = $workspace, monitor = \"$monitor\" })" >/dev/null 2>&1 || true
 }
 
 apply_profile() {
@@ -156,7 +156,7 @@ repair_profile() {
     parse_status "$status"
     if [[ -n "$laptop" ]]; then
         hyprctl -q dispatch focusmonitor "$laptop" >/dev/null 2>&1 || true
-        hyprctl -q dispatch workspace 1 >/dev/null 2>&1 || true
+        hyprctl -q dispatch "hl.dsp.focus({ workspace = 1 })" >/dev/null 2>&1 || true
     fi
     printf '%s\n' "$status"
 }

@@ -4,6 +4,13 @@ This directory contains helper scripts and stylesheets used by the Waybar config
 
 ## Scripts
 
+### `brightness-control.sh`
+**Purpose:** Handles click actions for the Waybar backlight module.
+- **Left-click:** Toggles between the current brightness and a comfortable 60% preset.
+- **Right-click:** Cycles coarse presets: 25%, 50%, 75%, 100%.
+- **Scroll:** Remains native Waybar fine control via `scroll-step`.
+- **Dependencies:** `brightnessctl`, `bash`.
+
 ### `cycle_audio_sink.sh`
 **Purpose:** Cycles the default audio output device (sink) to the next available one.
 - **Functionality:** 

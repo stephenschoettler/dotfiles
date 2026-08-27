@@ -37,31 +37,21 @@ get_battery_markup() {
         case "${status,,}" in
             charging)
                 status_label='charging'
-                color='#50FA7B'
                 ;;
             full)
                 status_label='full'
-                color='#50FA7B'
                 ;;
             discharging)
                 status_label='on battery'
-                if (( capacity <= 15 )); then
-                    color='#FF5555'
-                elif (( capacity <= 30 )); then
-                    color='#FFB86C'
-                else
-                    color='#8BE9FD'
-                fi
                 ;;
             not\ charging)
                 status_label='not charging'
-                color='#8BE9FD'
                 ;;
             *)
                 status_label='battery'
-                color='#8BE9FD'
                 ;;
         esac
+        color='#8BE9FD'
 
         printf "<span foreground='%s'>bat %s%% · %s</span>" "$color" "$(escape_markup "$capacity")" "$(escape_markup "$status_label")"
         return 0
@@ -72,10 +62,10 @@ get_battery_markup() {
 
 user_name=$(escape_markup "${USER:-$(id -un 2>/dev/null || printf 'w0lf')}")
 host_name=$(escape_markup "$(get_host_name || printf 'localhost')")
-identity="<span foreground='#6272A4'>${user_name} · ${host_name}</span>"
+identity="<span foreground='#FFB86C'>${user_name} · ${host_name}</span>"
 
 if battery_markup=$(get_battery_markup); then
-    printf "%s <span foreground='#44475A'>·</span> %s\n" "$identity" "$battery_markup"
+    printf "%s <span foreground='#BD93F9'>·</span> %s\n" "$identity" "$battery_markup"
 else
     printf "%s\n" "$identity"
 fi

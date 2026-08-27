@@ -313,7 +313,7 @@ alias clf='truncate -s 0'
 ########################################
 # Config Shortcuts
 ########################################
-alias hyprcon='vim ~/.config/hypr/hyprland.conf'
+alias hyprcon='vim ~/.config/hypr/hyprland.lua'
 alias wbcon='vim ~/.config/waybar/config'
 alias zshcon='vim ~/.zshrc'
 alias alcon='vim ~/.aliases'

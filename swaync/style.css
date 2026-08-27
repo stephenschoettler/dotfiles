@@ -6,10 +6,22 @@
   color: @foreground;
 }
 
+/*
+ * SwayNC's actual GTK root node is `blankwindow` (not `.blank-window`).
+ * The GTK theme also applies `.background`; match that combination so its
+ * opaque root background cannot paint the full-height layer around the panel.
+ */
 notificationwindow,
+notificationwindow.background,
+blankwindow,
+blankwindow.background,
 .blank-window,
+.blank-window.background,
 .floating-notifications {
   background: transparent;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
 }
 
 .control-center {

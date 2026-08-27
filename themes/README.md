@@ -8,7 +8,7 @@ This repo uses explicit named theme manifests, not a dynamic rice engine. The ac
 - `themes/current` - generated active theme name.
 - `bin/hypr-theme` - switch/list/doctor command.
 - Generated active files:
-  - `hypr/theme.conf` - Hyprland border/decoration tokens.
+  - `hypr/theme.lua` - Hyprland border/decoration tokens loaded by `hyprland.lua`.
   - `hypr/hyprpaper.conf` - wallpaper config for hyprpaper.
   - `hypr/hyprlock.conf` - rendered from `hypr/hyprlock.base.conf` plus theme tokens.
   - `waybar/colors.css` - Waybar color tokens.
@@ -26,7 +26,11 @@ bin/hypr-theme apply dracula
 bin/hypr-theme apply sailor
 ```
 
-`apply` renders the active files, records `themes/current`, sets the wallpaper through `hyprpaper` IPC when Hyprland is running, asks Hyprland to reload, reloads SwayNC CSS/config, and sends `SIGUSR2` to Waybar. Kitty, Wofi, and Hyprlock pick up the generated files on next launch.
+If Hyprland is using the repo-linked config on slim5, you can open a fuzzel theme picker with `Super+Shift+Return` and a transition-origin preset picker with `Super+Ctrl+Return`. The theme menu annotates the active row as `[current | <preset>]`, and theme-switch notifications also report the active transition preset so you always know what mode the next switch will use.
+
+`apply` renders the active files, records `themes/current`, then updates the wallpaper backend before reloading the rest of the desktop. On slim5 it now prefers `awww` for animated transitions and falls back to `hyprpaper` if `awww` is unavailable. Kitty, Wofi, and Hyprlock pick up the generated files on next launch.
+
+Per-theme wallpaper motion lives in `wallpaper_transition`, while the global origin override lives in `themes/transition-preset`. The current default preset is `cursor`, so the `grow` transition expands from the live mouse position instead of a fixed corner unless you deliberately switch presets.
 
 If you only want to render files without touching the live desktop:
 
@@ -52,4 +56,4 @@ On slim5, `install.sh` links the desktop config directories into `~/.config`. If
 
 ## Wallpaper transitions
 
-Deferred. `awww` is not installed on this workstation during this implementation, while `hyprpaper` is installed, running, and supports direct IPC updates. The architecture keeps wallpaper ownership in the manifest and centralizes wallpaper application in `bin/hypr-theme`, so a later `awww` backend can be added without changing the theme format or spreading transition logic through app configs.
+Enabled. `awww` is installed on slim5 and is now the preferred wallpaper backend for animated transitions, while `hyprpaper` remains as the fallback path if `awww` is unavailable. The architecture still keeps wallpaper ownership in the manifest and centralizes wallpaper application in `bin/hypr-theme`, so changing transition style is a theme-data change rather than an app-by-app rewrite.

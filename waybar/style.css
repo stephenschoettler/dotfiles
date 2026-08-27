@@ -27,7 +27,7 @@ tooltip label {
     padding: 0 8px;
     border: none;
     box-shadow: none;
-    border-radius: 10px;
+    border-radius: 5px;
     background: rgba(40, 42, 54, 0.80);
     min-height: 24px;
 }
@@ -97,13 +97,13 @@ tooltip label {
     background-size: 30px 10px;
 }
 
-#clock, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #custom-media, #tray, #custom-power, #custom-night-light, #idle_inhibitor, #window {
+#clock, #custom-notification, #custom-herdr, #battery, #cpu, #memory, #temperature, #backlight, #network, #pulseaudio, #custom-media, #tray, #custom-power, #custom-night-light, #custom-codexbar, #idle_inhibitor, #window {
     color: #F8F8F2;
     padding: 0 10px;
     margin: 2px;
     border: none;
     box-shadow: none;
-    border-radius: 10px;
+    border-radius: 5px;
     background: rgba(40, 42, 54, 0.80);
     min-width: 10px;
     min-height: 24px;
@@ -112,18 +112,51 @@ tooltip label {
 #clock {
 }
 
+#custom-notification {
+    padding: 0 11px 0 9px;
+}
+
+#custom-herdr {
+    padding: 0 9px;
+}
+
+#custom-herdr.blocked {
+    color: @red;
+    background: rgba(255, 85, 85, 0.18);
+    box-shadow: inset 0 -2px 0 @red;
+    font-weight: 700;
+}
+
+#custom-herdr.working {
+    color: @cyan;
+}
+
+#custom-herdr.idle {
+    color: @green;
+}
+
+#custom-herdr.unavailable {
+    color: @comment;
+}
+
 #battery {
 }
 
-#battery.charging {
-    color: #F8F8F2;
-    border-color: @yellow;
+#battery.good,
+#battery:not(.charging):not(.warning):not(.critical) {
+    color: @green;
 }
 
-#battery.warning:not(.charging),
+#battery.charging {
+    color: @green;
+}
+
+#battery.warning:not(.charging) {
+    color: @yellow;
+}
+
 #battery.critical:not(.charging) {
-    color: #F8F8F2;
-    border-color: @red;
+    color: @red;
 }
 
 #battery.full {
@@ -154,8 +187,7 @@ tooltip label {
 }
 
 #pulseaudio.muted {
-    color: #F8F8F2;
-    border-color: @comment;
+    color: @comment;
 }
 
 #tray {
@@ -168,7 +200,7 @@ tooltip label {
 }
 
 #custom-power {
-    color: #F8F8F2;
+    color: @red;
     margin: 2px;
 }
 
@@ -176,14 +208,16 @@ tooltip label {
     color: #F8F8F2;
 }
 
-#custom-night-light.on,
+#custom-night-light.on {
+    color: @yellow;
+}
+
 #custom-night-light.off {
-    color: #F8F8F2;
+    color: @comment;
 }
 
 #custom-night-light.missing {
-    color: #F8F8F2;
-    border-color: @red;
+    color: @red;
 }
 
 #idle_inhibitor {
@@ -191,7 +225,7 @@ tooltip label {
 }
 
 #idle_inhibitor.activated {
-    color: #F8F8F2;
+    color: @purple;
 }
 
 #window {

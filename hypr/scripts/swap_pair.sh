@@ -97,6 +97,7 @@ fi
 # No other monitor exists. Keep the old safe behavior: use base workspaces only.
 if [[ -z "$external" ]]; then
     TARGET=$BASE
+    TARGET_MONITOR=$laptop
 else
     BASE_MONITOR=$(workspace_monitor "$BASE")
     ALT_MONITOR=$(workspace_monitor "$ALT")
@@ -120,18 +121,23 @@ else
 
     if [[ "$CURRENT_MONITOR" == "$BASE_MONITOR" ]]; then
         TARGET=$ALT
+        TARGET_MONITOR=$ALT_MONITOR
     elif [[ "$CURRENT_MONITOR" == "$ALT_MONITOR" ]]; then
         TARGET=$BASE
+        TARGET_MONITOR=$BASE_MONITOR
     else
         # Unknown/manual monitor placement: choose the workspace that lives on the
         # opposite known monitor when possible, otherwise fall back to base.
         OTHER=$(other_monitor "$CURRENT_MONITOR")
         if [[ -n "$OTHER" && "$BASE_MONITOR" == "$OTHER" ]]; then
             TARGET=$BASE
+            TARGET_MONITOR=$BASE_MONITOR
         elif [[ -n "$OTHER" && "$ALT_MONITOR" == "$OTHER" ]]; then
             TARGET=$ALT
+            TARGET_MONITOR=$ALT_MONITOR
         else
             TARGET=$BASE
+            TARGET_MONITOR=$BASE_MONITOR
         fi
     fi
 fi
@@ -142,4 +148,5 @@ if [[ "$DRY_RUN" -eq 1 ]]; then
     exit 0
 fi
 
-hyprctl dispatch movetoworkspace "$TARGET" >/dev/null
+hyprctl dispatch "hl.dsp.window.move({ workspace = $TARGET })" >/dev/null &&
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = $TARGET, monitor = \"$TARGET_MONITOR\" })" >/dev/null

@@ -4,6 +4,14 @@
   "wallpaper": "wallpaper/sailor_moon_wallpaper.jpg",
   "wallpaper_fit": "cover",
   "monitors": ["eDP-2", "HDMI-A-1", "DP-1"],
+  "wallpaper_transition": {
+    "backend": "awww",
+    "type": "grow",
+    "position": "bottom-right",
+    "duration": "1.15",
+    "fps": "60",
+    "step": "30"
+  },
   "hypr": {
     "rounding": 12
   },

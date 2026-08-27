@@ -23,6 +23,10 @@ ensure_daemon() {
     fi
 }
 
+is_on() {
+    [[ -f "$state_file" ]] && [[ "$(<"$state_file")" == "on" ]] && pgrep -x hyprsunset >/dev/null 2>&1
+}
+
 status_json() {
     local class text tooltip
     local icon_pad=$'\u2009'
@@ -32,7 +36,7 @@ status_json() {
         text="󰖔"
         class="missing"
         tooltip="hyprsunset not installed"
-    elif [[ -f "$state_file" && "$(cat "$state_file")" == "on" ]] && pgrep -x hyprsunset >/dev/null 2>&1; then
+    elif is_on; then
         text="$night_icon"
         class="on"
         tooltip="Night light on (${temperature}K)"
@@ -74,8 +78,15 @@ case "${1:-toggle}" in
     status)
         status_json
         ;;
+    status-bool)
+        if is_on; then
+            printf 'true\n'
+        else
+            printf 'false\n'
+        fi
+        ;;
     *)
-        echo "Usage: ${0##*/} [toggle|on|off|status]" >&2
+        echo "Usage: ${0##*/} [toggle|on|off|status|status-bool]" >&2
         exit 2
         ;;
 esac

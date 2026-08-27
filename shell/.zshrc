@@ -141,8 +141,8 @@ bindkey '^l' clear-to-bottom
 alias clear='clear-to-bottom'
 
 # 3. STARTUP TRIGGER
-# We removed the 'if' check. Now it runs on EVERY interactive shell start.
-if [[ -n "$TMUX" ]]; then
+# Start every tmux or Herdr-managed shell with its prompt at the bottom.
+if [[ -n "$TMUX" || "${HERDR_ENV:-}" = 1 ]]; then
     clear-to-bottom
 fi
 
@@ -181,19 +181,22 @@ PROMPT='${P_GREEN}┌─[ ${P_WHITE}%n@%m ${P_GREEN}]─[ ${P_ORANGE}%~ ${P_GREE
 ${P_GREEN}└─>>${P_RESET} '
 
 # --------------------------
-# 7. SAFE TMUX AUTOSTART (Last)
+# 7. SAFE HERDR AUTOSTART (Last)
 # --------------------------
-# Autostart tmux only for interactive, non-root, real TTY, not inside tmux, not VS Code
+# Autostart Herdr only for interactive, non-root, real TTY shells,
+# not inside tmux, not inside Herdr, and not VS Code.
+# Set HERDR_AUTO=0 to bypass. Set TMUX_AUTO=1 HERDR_AUTO=0 to use the old tmux path manually.
 case $- in *i*) _interactive=1;; esac
-if [[ -z "$TMUX" && -n "$_interactive" && -t 1 && -z "$VSCODE_PID" && "$EUID" -ne 0 && "${TMUX_AUTO:-1}" = 1 ]]; then
-  if command -v tmux >/dev/null 2>&1; then
-    # Custom logic: Attach to lowest unattached or create new
+if [[ -z "$TMUX" && -z "$HERDR_ENV" && -n "$_interactive" && -t 1 && -z "$VSCODE_PID" && "$EUID" -ne 0 ]]; then
+  if [[ "${HERDR_AUTO:-1}" = 1 ]] && command -v herdr >/dev/null 2>&1; then
+    herdr
+  elif [[ "${TMUX_AUTO:-0}" = 1 ]] && command -v tmux >/dev/null 2>&1; then
+    # Fallback only: keep the old tmux behavior available without making it default.
     if [[ -x "$HOME/.config/tmux/tm.sh" ]]; then
         "$HOME/.config/tmux/tm.sh"
     elif tmux list-sessions >/dev/null 2>&1; then
        tmux attach
     else
-       # Otherwise create a new session
        tmux new
     fi
   fi

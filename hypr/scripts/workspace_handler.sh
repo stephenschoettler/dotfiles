@@ -78,9 +78,9 @@ TARGET=$(target_for_pair)
 
 case "$ACTION" in
     workspace)
-        hyprctl dispatch workspace "$TARGET" >/dev/null
+        hyprctl dispatch "hl.dsp.focus({ workspace = \"$TARGET\" })" >/dev/null
         ;;
     movetoworkspace)
-        hyprctl dispatch movetoworkspace "$TARGET" >/dev/null
+        hyprctl dispatch "hl.dsp.window.move({ workspace = $TARGET })" >/dev/null
         ;;
 esac

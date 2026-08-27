@@ -4,6 +4,14 @@
   "wallpaper": "wallpaper/Dracula/dracula (11).png",
   "wallpaper_fit": "cover",
   "monitors": ["eDP-2", "HDMI-A-1", "DP-1"],
+  "wallpaper_transition": {
+    "backend": "awww",
+    "type": "grow",
+    "position": "top-left",
+    "duration": "1.05",
+    "fps": "60",
+    "step": "30"
+  },
   "hypr": {
     "rounding": 10
   },

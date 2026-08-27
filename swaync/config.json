@@ -6,19 +6,19 @@
   "control-center-positionX": "right",
   "control-center-positionY": "top",
   "control-center-width": 460,
-  "control-center-height": 860,
+  "control-center-height": 900,
   "control-center-margin-top": 12,
   "control-center-margin-bottom": 12,
   "control-center-margin-right": 12,
   "control-center-margin-left": 12,
   "control-center-layer": "top",
-  "control-center-exclusive-zone": false,
+  "control-center-exclusive-zone": true,
   "layer-shell": true,
   "layer-shell-cover-screen": false,
   "notification-window-width": 420,
   "notification-body-image-height": 140,
   "notification-body-image-width": 260,
-  "fit-to-screen": false,
+  "fit-to-screen": true,
   "layer": "overlay",
   "cssPriority": "user",
   "keyboard-shortcuts": true,
@@ -27,7 +27,7 @@
   "notification-grouping": true,
   "relative-timestamps": true,
   "image-visibility": "when-available",
-  "transition-time": 160,
+  "transition-time": 220,
   "timeout": 7,
   "timeout-low": 4,
   "timeout-critical": 0,
@@ -63,15 +63,21 @@
       "buttons-per-row": 4,
       "actions": [
         {
-          "label": "Clear",
-          "command": "swaync-client -C"
+          "label": "Night",
+          "type": "toggle",
+          "active": false,
+          "command": "sh -c 'if [ \"$SWAYNC_TOGGLE_STATE\" = true ]; then /home/w0lf/.config/hypr/scripts/night_light.sh on; else /home/w0lf/.config/hypr/scripts/night_light.sh off; fi'",
+          "update-command": "/home/w0lf/.config/hypr/scripts/night_light.sh status-bool"
         },
         {
-          "label": "Hide",
-          "command": "swaync-client --hide-all"
+          "label": "Keep Awake",
+          "type": "toggle",
+          "active": false,
+          "command": "sh -c '/home/w0lf/.config/hypr/scripts/keep_awake.py set \"$SWAYNC_TOGGLE_STATE\"'",
+          "update-command": "/home/w0lf/.config/hypr/scripts/keep_awake.py status"
         },
         {
-          "label": "Audio",
+          "label": "Mixer",
           "command": "pavucontrol"
         },
         {
@@ -84,7 +90,7 @@
       "label": "Volume",
       "show-per-app": true,
       "show-per-app-icon": true,
-      "show-per-app-label": false,
+      "show-per-app-label": true,
       "expand-per-app": false,
       "empty-list-label": "No active apps",
       "expand-button-label": "Apps",
